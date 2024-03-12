@@ -1,7 +1,7 @@
 // API URLS
 const baseUrlMain = 'http://13.201.24.145:5000/software-project.in';
 const baseUrlLocalhost = 'http://localhost:5000/software-project.in';
-const baseUrlMobileLocalhost = 'http://13.233.198.107:5000/software-project.in';
+const baseUrlMobileLocalhost = 'http://52.66.158.66:5000/software-project.in';
 
 // Images
 const logo = 'assets/images/iitj.jpg';
