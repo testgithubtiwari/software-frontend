@@ -1,6 +1,4 @@
 // ignore_for_file: deprecated_member_use
-
-import 'package:DesignCredit/api/allapplicationsapi.dart';
 import 'package:DesignCredit/widgets/constants.dart';
 import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
@@ -8,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../models/allapplicationdesigncreditModel.dart';
+import '../../../api/allapplicationsapi.dart';
+import '../../../models/allapplicationdesigncreditmodelnew.dart';
 
 class Applications extends StatefulWidget {
   final String designCreditId;
@@ -19,7 +18,7 @@ class Applications extends StatefulWidget {
 }
 
 class _ApplicationsState extends State<Applications> {
-  List<MapEntry<String, AllApplicationDesignCreditModel>> _applications = [];
+  List<MapEntry<String, AllApplicationDesignCreditModelNew>> _applications = [];
   bool _isLoading = true;
   @override
   void initState() {
@@ -29,7 +28,7 @@ class _ApplicationsState extends State<Applications> {
 
   Future<void> _fetchApplications() async {
     try {
-      final List<MapEntry<String, AllApplicationDesignCreditModel>>
+      final List<MapEntry<String, AllApplicationDesignCreditModelNew>>
           applications =
           await fetchAllApplicationsDesignCredit(widget.designCreditId);
       setState(() {

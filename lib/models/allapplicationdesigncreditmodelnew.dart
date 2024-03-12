@@ -1,17 +1,17 @@
-class AllApplicationDesignCreditModel {
+class AllApplicationDesignCreditModelNew {
   String? sId;
   UserId? userId;
   String? resumeLink;
   String? designCreditId;
 
-  AllApplicationDesignCreditModel({
+  AllApplicationDesignCreditModelNew({
     this.sId,
     this.userId,
     this.resumeLink,
     this.designCreditId,
   });
 
-  AllApplicationDesignCreditModel.fromJson(Map<String, dynamic> json) {
+  AllApplicationDesignCreditModelNew.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     userId = json['userId'] != null ? UserId.fromJson(json['userId']) : null;
     resumeLink = json['resumeLink'];

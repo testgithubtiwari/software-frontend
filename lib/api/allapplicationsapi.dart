@@ -1,11 +1,8 @@
 import 'dart:convert';
-// import 'package:DesignCredit/models/allapplicationdesigncreditModel.dart';
-// import 'package:DesignCredit/models/allapplicationusermodel.dart';
-import 'package:http/http.dart' as http;
-// import 'package:DesignCredit/models/allapplicationsmodel.dart';
-import 'package:DesignCredit/widgets/constants.dart';
 
-import '../models/allapplicationdesigncreditModel.dart';
+import 'package:DesignCredit/models/allapplicationdesigncreditmodelnew.dart';
+import 'package:DesignCredit/widgets/constants.dart';
+import 'package:http/http.dart' as http;
 import '../models/allapplicationsmodel.dart';
 import '../models/allapplicationusermodel.dart';
 
@@ -31,7 +28,7 @@ Future<List<MapEntry<String, AllApplicationsModel>>>
   }
 }
 
-Future<List<MapEntry<String, AllApplicationDesignCreditModel>>>
+Future<List<MapEntry<String, AllApplicationDesignCreditModelNew>>>
     fetchAllApplicationsDesignCredit(String designCreditId) async {
   try {
     // print(designCreditId);
@@ -45,10 +42,10 @@ Future<List<MapEntry<String, AllApplicationDesignCreditModel>>>
 
       // Ensure jsonData is a List with at least one element
       if (jsonData.isNotEmpty && jsonData[0] is Map<String, dynamic>) {
-        final List<MapEntry<String, AllApplicationDesignCreditModel>>
+        final List<MapEntry<String, AllApplicationDesignCreditModelNew>>
             applicationsList = [];
         final application =
-            AllApplicationDesignCreditModel.fromJson(jsonData[0]);
+            AllApplicationDesignCreditModelNew.fromJson(jsonData[0]);
         applicationsList.add(MapEntry(application.sId ?? '', application));
         return applicationsList;
       } else {
