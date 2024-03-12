@@ -1,13 +1,14 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:DesignCredit/api/allapplicationsapi.dart';
-import 'package:DesignCredit/models/allapplicationdesigncreditModel.dart';
 import 'package:DesignCredit/widgets/constants.dart';
 import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../models/allapplicationdesigncreditModel.dart';
 
 class Applications extends StatefulWidget {
   final String designCreditId;

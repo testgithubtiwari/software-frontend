@@ -1,9 +1,13 @@
 import 'dart:convert';
-import 'package:DesignCredit/models/allapplicationdesigncreditModel.dart';
-import 'package:DesignCredit/models/allapplicationusermodel.dart';
+// import 'package:DesignCredit/models/allapplicationdesigncreditModel.dart';
+// import 'package:DesignCredit/models/allapplicationusermodel.dart';
 import 'package:http/http.dart' as http;
-import 'package:DesignCredit/models/allapplicationsmodel.dart';
+// import 'package:DesignCredit/models/allapplicationsmodel.dart';
 import 'package:DesignCredit/widgets/constants.dart';
+
+import '../models/allapplicationdesigncreditModel.dart';
+import '../models/allapplicationsmodel.dart';
+import '../models/allapplicationusermodel.dart';
 
 Future<List<MapEntry<String, AllApplicationsModel>>>
     fetchAllApplications() async {
