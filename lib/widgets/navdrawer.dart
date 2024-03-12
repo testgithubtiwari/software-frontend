@@ -4,7 +4,7 @@
 
 import 'package:DesignCredit/api/isprofilecompleted.dart';
 import 'package:DesignCredit/api/userapi.dart';
-import 'package:DesignCredit/models/userModel.dart';
+import 'package:DesignCredit/models/usermodel.dart';
 import 'package:DesignCredit/screens/adminoptions/allapplications.dart';
 import 'package:DesignCredit/screens/adminoptions/alldesigncredits.dart';
 import 'package:DesignCredit/screens/adminoptions/alluser.dart';
@@ -33,7 +33,7 @@ class NavDrawer extends StatefulWidget {
 }
 
 class _NavDrawerState extends State<NavDrawer> {
-  List<UserModel>? userFuture;
+  List<UserModelDesignCredit>? userFuture;
   @override
   void initState() {
     super.initState();
@@ -42,7 +42,7 @@ class _NavDrawerState extends State<NavDrawer> {
   }
 
   void getUserDetails() async {
-    Tuple2<List<UserModel>, int> result = await fetchUserData();
+    Tuple2<List<UserModelDesignCredit>, int> result = await fetchUserData();
     setState(() {
       userFuture = result.item1;
     });

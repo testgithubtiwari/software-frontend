@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-import 'package:DesignCredit/models/userModel.dart';
+import 'package:DesignCredit/models/usermodel.dart';
 import 'package:DesignCredit/widgets/constants.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -26,7 +26,7 @@ Future<void> _getTokensFromSharedPreferences() async {
   }
 }
 
-Future<Tuple2<List<UserModel>, int>> fetchUserData() async {
+Future<Tuple2<List<UserModelDesignCredit>, int>> fetchUserData() async {
   await _getTokensFromSharedPreferences();
 
   String url = '$baseUrlMobileLocalhost/user/user';
@@ -40,10 +40,11 @@ Future<Tuple2<List<UserModel>, int>> fetchUserData() async {
   if (statusCode == 200) {
     Map<String, dynamic> responseData = json.decode(response.body);
     if (responseData.containsKey('user')) {
-      UserModel user = UserModel.fromJson(responseData['user']);
-      List<UserModel> userList = [user];
+      UserModelDesignCredit user =
+          UserModelDesignCredit.fromJson(responseData['user']);
+      List<UserModelDesignCredit> userList = [user];
       // print(userList[0].email);
-      return Tuple2<List<UserModel>, int>(userList, statusCode);
+      return Tuple2<List<UserModelDesignCredit>, int>(userList, statusCode);
     } else {
       print('No user data found in response.');
     }
@@ -58,5 +59,5 @@ Future<Tuple2<List<UserModel>, int>> fetchUserData() async {
     // Request failed with non-200 status code
     print('Request failed with status code: $statusCode');
   }
-  return Tuple2<List<UserModel>, int>([], statusCode);
+  return Tuple2<List<UserModelDesignCredit>, int>([], statusCode);
 }

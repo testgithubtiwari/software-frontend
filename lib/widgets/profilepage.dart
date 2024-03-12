@@ -1,8 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:DesignCredit/api/userapi.dart';
-import 'package:DesignCredit/models/userModel.dart';
-// import 'package:DesignCredit/models/usermodel.dart';
+import 'package:DesignCredit/models/usermodel.dart';
 import 'package:DesignCredit/screens/auth/loginscreen.dart';
 import 'package:DesignCredit/screens/auth/signupscreen.dart';
 import 'package:DesignCredit/widgets/constants.dart';
@@ -24,7 +23,7 @@ class UpdateProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<UpdateProfilePage> {
-  List<UserModel>? _userFuture;
+  List<UserModelDesignCredit>? _userFuture;
   String? _email; // Make _email nullable
   String? _name;
   String? _userType;
@@ -39,7 +38,7 @@ class _ProfilePageState extends State<UpdateProfilePage> {
   }
 
   void checkValidToken() async {
-    Tuple2<List<UserModel>, int> result = await fetchUserData();
+    Tuple2<List<UserModelDesignCredit>, int> result = await fetchUserData();
     int statusCode = result.item2;
     if (statusCode == 401) {
       showToast(

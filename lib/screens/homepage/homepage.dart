@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'package:DesignCredit/api/userapi.dart';
+import 'package:DesignCredit/models/usermodel.dart';
 // import 'package:DesignCredit/models/allapplicationusermodel.dart';
-import 'package:DesignCredit/models/userModel.dart';
 import 'package:DesignCredit/screens/auth/loginscreen.dart';
 import 'package:DesignCredit/screens/auth/signupscreen.dart';
 // import 'package:DesignCredit/screens/studentoptions/userapplications.dart';
@@ -24,7 +24,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<UserModel>? _userFuture;
+  List<UserModelDesignCredit>? _userFuture;
   @override
   void initState() {
     super.initState();
@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void checkValidToken() async {
-    Tuple2<List<UserModel>, int> result = await fetchUserData();
+    Tuple2<List<UserModelDesignCredit>, int> result = await fetchUserData();
     int statusCode = result.item2;
     if (statusCode == 401) {
       showToast(

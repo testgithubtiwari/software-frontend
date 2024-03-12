@@ -1,5 +1,5 @@
 // ignore: file_names
-class UserModel {
+class UserModelDesignCredit {
   String? name;
   String? sId;
   String? email;
@@ -11,7 +11,7 @@ class UserModel {
   // String? updatedAt;
   // int? iV;
 
-  UserModel({
+  UserModelDesignCredit({
     this.name,
     this.sId,
     this.email,
@@ -24,7 +24,7 @@ class UserModel {
     // this.iV
   });
 
-  UserModel.fromJson(Map<String, dynamic> json) {
+  UserModelDesignCredit.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     sId = json['_id'];
     email = json['email'];

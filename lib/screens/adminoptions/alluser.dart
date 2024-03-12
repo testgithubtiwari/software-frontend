@@ -16,7 +16,7 @@ class AllUser extends StatefulWidget {
 }
 
 class _AllUserState extends State<AllUser> {
-  List<UserModel> allUsers = [];
+  List<UserModelDesignCredit> allUsers = [];
   @override
   void initState() {
     super.initState();
@@ -25,7 +25,7 @@ class _AllUserState extends State<AllUser> {
 
   Future<void> fetchAllUsers() async {
     try {
-      List<UserModel> users = await getAllUsers();
+      List<UserModelDesignCredit> users = await getAllUsers();
       setState(() {
         allUsers = users;
       });
