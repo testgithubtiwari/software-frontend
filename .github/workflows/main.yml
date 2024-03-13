@@ -71,6 +71,6 @@ jobs:
                 run: |
                   git config --local user.email "action@github.com"
                   git config --local user.name "GitHub Action"
-                  git add build/app/outputs/flutter-apk/app-release.apk
+                  git add -f build/app/outputs/flutter-apk/app-release.apk
                   git commit -m "Add release APK"
                   git push
