@@ -73,5 +73,5 @@ jobs:
                   git config --local user.name "GitHub Action"
                   git add -f build/app/outputs/flutter-apk/app-release.apk
                   git commit -m "Add release APK"
-                  git pull origin main
+                  git pull origin main --rebase
                   git push origin main
