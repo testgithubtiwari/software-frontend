@@ -47,11 +47,21 @@ jobs:
       - name: 📦 Get packages
         run: flutter pub get
 
+      - name: Print working directory
+        run: pwd
+      
+      - name: List files in working directory
+        run: ls -al
+      
+      - name: Check Flutter SDK version
+        run: flutter --version
+
       - name: 🏭 Build Android APK
         run: flutter build apk --release
+        working-directory: frontend
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2
         with:
           name: release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: frontend/build/app/outputs/flutter-apk/app-release.apk
