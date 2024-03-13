@@ -48,7 +48,6 @@ jobs:
         
               - name: Get Flutter packages
                 run: flutter pub get
-                working-directory: D:\softwareProject\frontend
         
               - name: Print working directory
                 run: pwd
@@ -61,7 +60,6 @@ jobs:
         
               - name: Build Android APK
                 run: flutter build apk --release
-                working-directory: D:\softwareProject\frontend
         
               - name: Upload APK artifact
                 uses: actions/upload-artifact@v2
