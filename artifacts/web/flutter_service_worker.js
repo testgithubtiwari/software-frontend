@@ -38,8 +38,8 @@ const RESOURCES = {"assets/assets/images/iitj.jpg": "ed86c3b8aca8b6865b018eddb68
 "flutter.js": "c71a09214cb6f5f8996a531350400a9a",
 "favicon.ico": "0fab2b7bbbc354c961a06d5fff83455c",
 "manifest.json": "5c1cfb16964040df5acbad615e16514d",
-"index.html": "4a5034e90a402cd2a3bf4c0ed42ca1c3",
-"/": "4a5034e90a402cd2a3bf4c0ed42ca1c3",
+"index.html": "6a5c1bdc55ad414a2c82bf60d4a5656c",
+"/": "6a5c1bdc55ad414a2c82bf60d4a5656c",
 "main.dart.js": "420b897f752c027e27b7fec928df2920"};
 // The application shell files that are downloaded before a service worker can
 // start.
