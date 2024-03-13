@@ -65,12 +65,12 @@ jobs:
                 uses: actions/upload-artifact@v2
                 with:
                   name: release-apk
-                  path: build\app\outputs\flutter-apk\app-release.apk
+                  path: build/app/outputs/flutter-apk/app-release.apk
         
               - name: Commit changes
                 run: |
                   git config --local user.email "action@github.com"
                   git config --local user.name "GitHub Action"
-                  git add build\app\outputs\flutter-apk\app-release.apk
+                  git add build/app/outputs/flutter-apk/app-release.apk
                   git commit -m "Add release APK"
                   git push
