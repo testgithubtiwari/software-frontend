@@ -1,14 +1,14 @@
 name: Flutter Deploy
-"on":
+
+on:
   push:
-    # (1)
     branches:
       - "main"
+
 jobs:
   build_and_deploy_web:
     name: Build & Deploy Flutter to Web
     runs-on: ubuntu-latest
-    # (2)
     steps:
       - uses: actions/checkout@v2
 
@@ -25,12 +25,33 @@ jobs:
       - name: 🏭 Build Web Application
         run: flutter build web --release
 
-      # (3)
       - name: Make copy of artifacts
         run: |
           chmod u+x "${GITHUB_WORKSPACE}/createandcopytofolder.sh"
           bash "${GITHUB_WORKSPACE}/createandcopytofolder.sh"
-      # (4)
+
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Commit the artifacts.
+
+  build_release_apk:
+    name: Build Release APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+
+      - name: 📦 Get packages
+        run: flutter pub get
+
+      - name: 🏭 Build Android APK
+        run: flutter build apk --release
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
