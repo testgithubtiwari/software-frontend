@@ -58,7 +58,7 @@ jobs:
 
       - name: 🏭 Build Android APK
         run: flutter build apk --release
-        working-directory: frontend
+        working-directory: D:\softwareProject\frontend
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2
