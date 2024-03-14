@@ -86,9 +86,11 @@ class _DeskTopAppBarState extends State<DeskTopAppBar> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return userFuture == null
         ? Container(
-            width: 320,
+            width: size.width,
+            height: 60,
             color: const Color.fromARGB(111, 0, 0, 0),
             child: const SpinKitWave(
               color: Colors.white,
