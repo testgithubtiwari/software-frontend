@@ -11,7 +11,7 @@ import 'package:DesignCredit/screens/adminoptions/alluser.dart';
 import 'package:DesignCredit/screens/auth/loginscreen.dart';
 // import 'package:DesignCredit/screens/professoroptions.dart/floatdesigncredits.dart';
 import 'package:DesignCredit/screens/professoroptions.dart/adddesigncredit.dart';
-import 'package:DesignCredit/screens/professoroptions.dart/floatdesigncredits.dart';
+import 'package:DesignCredit/screens/professoroptions.dart/viewdesigncredit.dart';
 import 'package:DesignCredit/screens/studentoptions/designcredits.dart';
 import 'package:DesignCredit/screens/studentoptions/results.dart';
 import 'package:DesignCredit/screens/studentoptions/userapplications.dart';

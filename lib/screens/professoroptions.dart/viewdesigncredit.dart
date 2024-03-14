@@ -2,6 +2,7 @@ import 'package:DesignCredit/api/designcreditapi.dart';
 import 'package:DesignCredit/models/designcreditmodel.dart';
 import 'package:DesignCredit/screens/professoroptions.dart/widgets/applications.dart';
 import 'package:DesignCredit/widgets/constants.dart';
+import 'package:DesignCredit/widgets/desktopappbar.dart';
 import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,9 @@ class _ViewYourDesignCreditsState extends State<ViewYourDesignCredits> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const MobileAppBar(),
+                size.width > 1200
+                    ? const DeskTopAppBar()
+                    : const MobileAppBar(),
                 const SizedBox(
                   height: 20,
                 ),
@@ -69,7 +72,7 @@ class _ViewYourDesignCreditsState extends State<ViewYourDesignCredits> {
                         child: Text(
                           'No design credits found',
                           style: GoogleFonts.poppins(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                           ),
@@ -179,20 +182,23 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
             children: [
               GestureDetector(
                 onTap: () {},
-                child: Container(
-                  height: 50,
-                  width: 120,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.blue,
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Update',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Container(
+                    height: 50,
+                    width: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.blue,
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Update',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),
@@ -208,20 +214,23 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
                     ),
                   );
                 },
-                child: Container(
-                  height: 50,
-                  width: 120,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.blue,
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Applications',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Container(
+                    height: 50,
+                    width: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.blue,
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Applications',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),

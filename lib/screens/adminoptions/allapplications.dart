@@ -3,11 +3,12 @@
 import 'package:DesignCredit/api/allapplicationsapi.dart';
 import 'package:DesignCredit/models/allapplicationsmodel.dart';
 import 'package:DesignCredit/widgets/constants.dart';
+import 'package:DesignCredit/widgets/desktopappbar.dart';
 import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -62,7 +63,9 @@ class _AllApplicationsState extends State<AllApplications> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const MobileAppBar(),
+                size.width > 1200
+                    ? const DeskTopAppBar()
+                    : const MobileAppBar(),
                 const SizedBox(
                   height: 20,
                 ),
@@ -75,7 +78,7 @@ class _AllApplicationsState extends State<AllApplications> {
                             child: Text(
                               'No applications found',
                               style: GoogleFonts.poppins(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
                               ),

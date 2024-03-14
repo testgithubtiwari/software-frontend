@@ -98,12 +98,12 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     if (email.isEmpty || password.isEmpty) {
       Navigator.of(context).pop();
-      showToast('Please fill the required fields');
+      showToast('Please fill the required fields', Colors.red);
     } else if (!RegExp(
       r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
     ).hasMatch(email)) {
       Navigator.of(context).pop();
-      showToast('Invalid email address');
+      showToast('Invalid email address', Colors.red);
     } else {
       try {
         final response = await http.post(
@@ -130,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
           Navigator.of(context).pop();
 
-          showToast('Login Successful');
+          showToast('Login Successful', Colors.green);
 
           await Future.delayed(const Duration(seconds: 2));
 
@@ -139,23 +139,23 @@ class _LoginScreenState extends State<LoginScreen> {
         } else if (response.statusCode == 401) {
           // print(response);
           Navigator.of(context).pop();
-          showToast('Email or password is wrong!');
+          showToast('Email or password is wrong!', Colors.red);
         }
       } catch (e) {
         print("Error occurred: $e");
         Navigator.of(context).pop();
-        showToast("Error occurred! Please try again later.");
+        showToast("Error occurred! Please try again later.", Colors.red);
       }
     }
   }
 
-  void showToast(String message) {
+  void showToast(String message, Color color) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,
       timeInSecForIosWeb: 1,
-      backgroundColor: Colors.red,
+      backgroundColor: color,
       textColor: Colors.white,
       fontSize: 16.0,
     );

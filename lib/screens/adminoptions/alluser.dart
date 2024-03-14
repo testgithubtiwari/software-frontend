@@ -3,6 +3,7 @@
 import 'package:DesignCredit/api/getalluserapi.dart';
 import 'package:DesignCredit/models/usermodel.dart';
 import 'package:DesignCredit/widgets/constants.dart';
+import 'package:DesignCredit/widgets/desktopappbar.dart';
 import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,9 @@ class _AllUserState extends State<AllUser> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const MobileAppBar(),
+                size.width > 1200
+                    ? const DeskTopAppBar()
+                    : const MobileAppBar(),
                 const SizedBox(
                   height: 15,
                 ),
@@ -97,18 +100,21 @@ class UserContainer extends StatefulWidget {
 class _UserContainerState extends State<UserContainer> {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Container(
-      margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+      margin: size.width > 1200
+          ? const EdgeInsets.fromLTRB(5, 0, 10, 10)
+          : const EdgeInsets.fromLTRB(0, 0, 0, 10),
       padding: const EdgeInsets.all(15),
-      height: 200,
+      // height: 250,
       width: 300,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: const Color.fromARGB(160, 0, 0, 0),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        // crossAxisAlignment: CrossAxisAlignment.start,
+        // mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Email-Id: ${widget.email}',

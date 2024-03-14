@@ -55,16 +55,16 @@ class _SignUpState extends State<SignUp> {
 
     if (email.isEmpty || password.isEmpty) {
       Navigator.of(context).pop();
-      showToast('Please fill the required fields');
+      showToast('Please fill the required fields', Colors.red);
     } else if (!RegExp(
       r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
     ).hasMatch(email)) {
       Navigator.of(context).pop();
-      showToast('Invalid email address');
+      showToast('Invalid email address', Colors.red);
     } else if (userType == 'Student') {
       if (rollNo.isEmpty) {
         Navigator.of(context).pop();
-        showToast('Please fill the required fields');
+        showToast('Please fill the required fields', Colors.red);
       } else {
         try {
           final response = await http.post(
@@ -88,7 +88,7 @@ class _SignUpState extends State<SignUp> {
 
             Navigator.of(context).pop();
 
-            showToast('You have successfully registered');
+            showToast('You have successfully registered', Colors.green);
 
             await Future.delayed(const Duration(seconds: 2));
 
@@ -98,12 +98,12 @@ class _SignUpState extends State<SignUp> {
             // print(response);
             // await Future.delayed(const Duration(seconds: 5));
             Navigator.of(context).pop();
-            showToast('User this email already registered!');
+            showToast('User this email already registered!', Colors.red);
           }
         } catch (e) {
           print("Error occurred: $e");
           Navigator.of(context).pop();
-          showToast('Error occurred! Please try again later.');
+          showToast('Error occurred! Please try again later.', Colors.red);
         }
       }
     } else {
@@ -127,7 +127,7 @@ class _SignUpState extends State<SignUp> {
           prefs.setString('refreshToken', '');
           await Future.delayed(const Duration(seconds: 5));
           Navigator.of(context).pop();
-          showToast('You have successfully registered');
+          showToast('You have successfully registered', Colors.green);
 
           await Future.delayed(const Duration(seconds: 2));
 
@@ -136,23 +136,23 @@ class _SignUpState extends State<SignUp> {
         } else if (response.statusCode == 409) {
           Navigator.of(context).pop();
           // print(response);
-          showToast('User this email already registered!');
+          showToast('User this email already registered!', Colors.red);
         }
       } catch (e) {
         Navigator.of(context).pop();
         print("Error occurred: $e");
-        showToast('Error occurred! Please try again later.');
+        showToast('Error occurred! Please try again later.', Colors.red);
       }
     }
   }
 
-  void showToast(String message) {
+  void showToast(String message, Color color) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,
       timeInSecForIosWeb: 1,
-      backgroundColor: Colors.red,
+      backgroundColor: color,
       textColor: Colors.white,
       fontSize: 16.0,
     );
@@ -259,7 +259,7 @@ class _SignUpState extends State<SignUp> {
                                   ),
                                   iconSize: 25,
                                   dropdownColor:
-                                      const Color.fromARGB(134, 158, 158, 158),
+                                      const Color.fromARGB(133, 14, 70, 92),
                                   items: <String>[
                                     'Admin',
                                     'Student',
@@ -527,7 +527,8 @@ class _SignUpState extends State<SignUp> {
                                         color: Colors.white,
                                       ),
                                       iconSize: 25,
-                                      dropdownColor: Colors.grey,
+                                      dropdownColor:
+                                          const Color.fromARGB(255, 11, 40, 78),
                                       items: <String>[
                                         'Admin',
                                         'Student',
@@ -585,7 +586,9 @@ class _SignUpState extends State<SignUp> {
                                                   color: Colors.white,
                                                 ),
                                                 iconSize: 25,
-                                                dropdownColor: Colors.grey,
+                                                dropdownColor:
+                                                    const Color.fromARGB(
+                                                        255, 11, 40, 78),
                                                 items: branchName.map<
                                                         DropdownMenuItem<
                                                             String>>(

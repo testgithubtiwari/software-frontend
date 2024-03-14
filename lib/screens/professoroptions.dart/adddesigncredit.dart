@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:DesignCredit/widgets/constants.dart';
+import 'package:DesignCredit/widgets/desktopappbar.dart';
 import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
 import 'package:flutter/material.dart';
@@ -133,14 +134,18 @@ class _AddDesignCreditsState extends State<AddDesignCredits> {
           ),
           child: Column(
             children: [
-              const MobileAppBar(),
-              const SizedBox(
-                height: 15,
-              ),
+              size.width > 1200 ? const DeskTopAppBar() : const MobileAppBar(),
+              size.width > 1200
+                  ? const SizedBox(
+                      height: 15,
+                    )
+                  : const SizedBox(
+                      height: 25,
+                    ),
               Container(
                 padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
                 height: 550,
-                width: size.width * 0.90,
+                width: size.width > 1200 ? 700 : size.width * 0.90,
                 decoration: BoxDecoration(
                   border: Border.all(width: 1, color: Colors.amberAccent),
                   borderRadius: BorderRadius.circular(15),
@@ -148,15 +153,15 @@ class _AddDesignCreditsState extends State<AddDesignCredits> {
                 ),
                 child: SingleChildScrollView(
                   child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(
                         height: 20,
                       ),
                       Container(
-                        height: size.width * 0.30,
-                        width: size.width * 0.30,
+                        height: size.width > 1200 ? 200 : size.width * 0.30,
+                        width: size.width > 1200 ? 200 : size.width * 0.30,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(logo),
@@ -267,7 +272,7 @@ class _AddDesignCreditsState extends State<AddDesignCredits> {
                           cursor: SystemMouseCursors.click,
                           child: Container(
                             height: 50,
-                            width: size.width * 0.65,
+                            width: size.width > 1200 ? 300 : size.width * 0.45,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: const Color.fromARGB(255, 12, 44, 43),
