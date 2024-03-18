@@ -132,172 +132,181 @@ class _AddDesignCreditsState extends State<AddDesignCredits> {
               fit: BoxFit.cover,
             ),
           ),
-          child: Column(
-            children: [
-              size.width > 1200 ? const DeskTopAppBar() : const MobileAppBar(),
-              size.width > 1200
-                  ? const SizedBox(
-                      height: 15,
-                    )
-                  : const SizedBox(
-                      height: 25,
-                    ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
-                height: 550,
-                width: size.width > 1200 ? 700 : size.width * 0.90,
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.amberAccent),
-                  borderRadius: BorderRadius.circular(15),
-                  color: const Color.fromARGB(111, 0, 0, 0),
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        height: 20,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                size.width > 1200
+                    ? const DeskTopAppBar()
+                    : const MobileAppBar(),
+                size.width > 1200
+                    ? const SizedBox(
+                        height: 15,
+                      )
+                    : const SizedBox(
+                        height: 25,
                       ),
-                      Container(
-                        height: size.width > 1200 ? 200 : size.width * 0.30,
-                        width: size.width > 1200 ? 200 : size.width * 0.30,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(logo),
-                            fit: BoxFit.fill,
+                Container(
+                  padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
+                  height: 550,
+                  width: size.width > 1200 ? 700 : size.width * 0.90,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.amberAccent),
+                    borderRadius: BorderRadius.circular(15),
+                    color: const Color.fromARGB(111, 0, 0, 0),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          height: size.width > 1200 ? 200 : size.width * 0.30,
+                          width: size.width > 1200 ? 200 : size.width * 0.30,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(logo),
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      CustomTextField(
-                        labelText: 'Project-Name',
-                        // value: projectName!,
-                        onChanged: (value) {
-                          setState(() {
-                            projectName = value;
-                          });
-                        },
-                        backgroundColor: const Color.fromARGB(255, 12, 44, 43),
-                      ),
-                      CustomTextField(
-                        // helpingtext:
-                        //     'Write the branches with comma between them',
-                        labelText: 'Eligible Branches',
-                        // value: projectName!,
-                        onChanged: (value) {
-                          setState(
-                            () {
-                              elegibleBranches = value;
-                            },
-                          );
-                        },
-                        backgroundColor: const Color.fromARGB(255, 12, 44, 43),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 8,
+                        const SizedBox(
+                          height: 5,
                         ),
-                        child: DropdownButtonFormField<String>(
-                          value: offeredBy,
-                          onChanged: (String? value) {
+                        CustomTextField(
+                          labelText: 'Project-Name',
+                          // value: projectName!,
+                          onChanged: (value) {
                             setState(() {
-                              offeredBy = value!;
+                              projectName = value;
                             });
                           },
-                          menuMaxHeight: 300,
-                          icon: const Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.white,
-                          ),
-                          iconSize: 25,
-                          dropdownColor: const Color.fromARGB(255, 12, 44, 43),
-                          items: branchName
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                ),
-                              ),
+                          backgroundColor:
+                              const Color.fromARGB(255, 12, 44, 43),
+                        ),
+                        CustomTextField(
+                          // helpingtext:
+                          //     'Write the branches with comma between them',
+                          labelText: 'Eligible Branches',
+                          // value: projectName!,
+                          onChanged: (value) {
+                            setState(
+                              () {
+                                elegibleBranches = value;
+                              },
                             );
-                          }).toList(),
-                          borderRadius: BorderRadius.circular(20),
-                          decoration: InputDecoration(
-                            labelText: 'Offered-By',
-                            labelStyle: const TextStyle(
+                          },
+                          backgroundColor:
+                              const Color.fromARGB(255, 12, 44, 43),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 8,
+                          ),
+                          child: DropdownButtonFormField<String>(
+                            value: offeredBy,
+                            onChanged: (String? value) {
+                              setState(() {
+                                offeredBy = value!;
+                              });
+                            },
+                            menuMaxHeight: 300,
+                            icon: const Icon(
+                              Icons.arrow_drop_down,
                               color: Colors.white,
-                              fontSize: 20,
                             ),
-                            fillColor: const Color.fromARGB(255, 12, 44, 43),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18),
+                            iconSize: 25,
+                            dropdownColor:
+                                const Color.fromARGB(255, 12, 44, 43),
+                            items: branchName
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            borderRadius: BorderRadius.circular(20),
+                            decoration: InputDecoration(
+                              labelText: 'Offered-By',
+                              labelStyle: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                              fillColor: const Color.fromARGB(255, 12, 44, 43),
+                              filled: true,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      CustomTextField(
-                        labelText: 'Description',
-                        // value: projectName!,
-                        onChanged: (value) {
-                          setState(
-                            () {
-                              description = value;
-                            },
-                          );
-                        },
-                        backgroundColor: const Color.fromARGB(255, 12, 44, 43),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          print(projectName);
-                          addDesignCredit(
-                            projectName,
-                            elegibleBranches,
-                            offeredBy,
-                            description,
-                          );
-                        },
-                        child: MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: Container(
-                            height: 50,
-                            width: size.width > 1200 ? 300 : size.width * 0.45,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: const Color.fromARGB(255, 12, 44, 43),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Float-Design Credit',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
+                        CustomTextField(
+                          labelText: 'Description',
+                          // value: projectName!,
+                          onChanged: (value) {
+                            setState(
+                              () {
+                                description = value;
+                              },
+                            );
+                          },
+                          backgroundColor:
+                              const Color.fromARGB(255, 12, 44, 43),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            print(projectName);
+                            addDesignCredit(
+                              projectName,
+                              elegibleBranches,
+                              offeredBy,
+                              description,
+                            );
+                          },
+                          child: MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: Container(
+                              height: 50,
+                              width:
+                                  size.width > 1200 ? 300 : size.width * 0.45,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: const Color.fromARGB(255, 12, 44, 43),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Float-Design Credit',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
