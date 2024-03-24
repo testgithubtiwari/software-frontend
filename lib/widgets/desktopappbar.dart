@@ -2,7 +2,6 @@
 
 import 'package:DesignCredit/api/isprofilecompleted.dart';
 import 'package:DesignCredit/screens/adminoptions/allapplications.dart';
-import 'package:DesignCredit/screens/adminoptions/alldesigncredits.dart';
 import 'package:DesignCredit/screens/adminoptions/alluser.dart';
 import 'package:DesignCredit/screens/professoroptions.dart/adddesigncredit.dart';
 import 'package:DesignCredit/screens/professoroptions.dart/viewdesigncredit.dart';
