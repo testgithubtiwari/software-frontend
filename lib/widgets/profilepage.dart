@@ -178,9 +178,7 @@ class _ProfilePageState extends State<UpdateProfilePage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                size.width > 1200
-                    ? const DeskTopAppBar()
-                    : const MobileAppBar(),
+                size.width > 1200 ? Container() : const MobileAppBar(),
                 size.width > 1200
                     ? const SizedBox(
                         height: 15,

@@ -2,9 +2,11 @@
 
 import 'package:DesignCredit/api/isprofilecompleted.dart';
 import 'package:DesignCredit/screens/adminoptions/allapplications.dart';
+import 'package:DesignCredit/screens/adminoptions/alldesigncredits.dart';
 import 'package:DesignCredit/screens/adminoptions/alluser.dart';
 import 'package:DesignCredit/screens/professoroptions.dart/adddesigncredit.dart';
 import 'package:DesignCredit/screens/professoroptions.dart/viewdesigncredit.dart';
+import 'package:DesignCredit/screens/studentoptions/designcredits.dart';
 import 'package:DesignCredit/widgets/constants.dart';
 import 'package:DesignCredit/widgets/profilepage.dart';
 // import 'package:flutter/cupertino.dart';
@@ -307,12 +309,21 @@ class _StudentOptionState extends State<StudentOption> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         ClickableText(
-          text: 'Apply Design Credits',
-          onTap: () {},
+          text: 'All Design Credits',
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const DesignCredits()));
+          },
+        ),
+        const SizedBox(
+          width: 30,
         ),
         ClickableText(
-          text: 'All Applications',
+          text: 'My Applications',
           onTap: () {},
+        ),
+        const SizedBox(
+          width: 30,
         ),
         ClickableText(
           text: 'Check Results',

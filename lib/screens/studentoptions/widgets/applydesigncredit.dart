@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:DesignCredit/widgets/constants.dart';
+import 'package:DesignCredit/widgets/desktopappbar.dart';
 import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
 // import 'package:file_picker/_internal/file_picker_web.dart';
@@ -230,14 +231,16 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const MobileAppBar(),
+                size.width <= 1200
+                    ? const MobileAppBar()
+                    : const DeskTopAppBar(),
                 const SizedBox(
                   height: 15,
                 ),
                 Container(
                   padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
-                  height: 550,
-                  width: size.width * 0.90,
+                  height: size.width > 1200 ? 500 : 550,
+                  width: size.width > 1200 ? 500 : size.width * 0.90,
                   decoration: BoxDecoration(
                     border: Border.all(width: 1, color: Colors.amberAccent),
                     borderRadius: BorderRadius.circular(15),
@@ -250,8 +253,8 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
                           height: 20,
                         ),
                         Container(
-                          height: size.width * 0.30,
-                          width: size.width * 0.30,
+                          height: size.width >= 1200 ? 200 : size.width * 0.30,
+                          width: size.width >= 1200 ? 200 : size.width * 0.30,
                           decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(logo),

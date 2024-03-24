@@ -2,6 +2,7 @@ import 'package:DesignCredit/api/designcreditapi.dart';
 import 'package:DesignCredit/models/designcreditmodel.dart';
 import 'package:DesignCredit/screens/studentoptions/widgets/applydesigncredit.dart';
 import 'package:DesignCredit/widgets/constants.dart';
+import 'package:DesignCredit/widgets/desktopappbar.dart';
 import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,9 @@ class _DesignCreditsState extends State<DesignCredits> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const MobileAppBar(),
+                size.width <= 1200
+                    ? const MobileAppBar()
+                    : const DeskTopAppBar(),
                 const SizedBox(
                   height: 20,
                 ),
@@ -189,20 +192,23 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
             },
             child: Align(
               alignment: Alignment.bottomRight,
-              child: Container(
-                height: 40,
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Colors.blue,
-                ),
-                child: const Center(
-                  child: Text(
-                    'Apply',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Container(
+                  height: 40,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.blue,
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Apply',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),
