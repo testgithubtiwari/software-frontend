@@ -1,17 +1,19 @@
 import 'package:DesignCredit/firebase_options.dart';
+import 'package:DesignCredit/pushnotificationservice.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:DesignCredit/screens/auth/loginscreen.dart';
 import 'package:flutter/services.dart';
 
-  void main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     systemNavigationBarColor: Colors.grey,
     statusBarColor: Colors.black,
   ));
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   runApp(const MyApp());
 }
 
@@ -23,6 +25,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final PushNotificationService _notificationService =
+      PushNotificationService();
   @override
   void initState() {
     print('Hello !');
@@ -35,7 +39,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    _notificationService.initialize();
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Design Credit',
       home: LoginScreen(),
