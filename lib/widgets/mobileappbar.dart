@@ -1,5 +1,7 @@
+import 'package:DesignCredit/screens/homepage/homepage.dart';
 import 'package:DesignCredit/widgets/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class MobileAppBar extends StatefulWidget {
   const MobileAppBar({super.key});
@@ -22,12 +24,18 @@ class _MobileAppBarState extends State<MobileAppBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SizedBox(
-            height: 50,
-            width: 40,
-            child: Image(
-              image: AssetImage(reduceLogo),
-              fit: BoxFit.fill,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomePage()));
+            },
+            child: const SizedBox(
+              height: 50,
+              width: 40,
+              child: Image(
+                image: AssetImage(reduceLogo),
+                fit: BoxFit.fill,
+              ),
             ),
           ),
           IconButton(

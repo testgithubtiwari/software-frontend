@@ -95,20 +95,24 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 20,
               ),
-              Text(
-                'My Applications',
-                style: GoogleFonts.orbitron(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
+              Container(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  _userFuture![0].userType == 'Admin'
+                      ? 'Weclome on admin pannel! You can see all the'
+                          'users, all design credits and also all the application. To see these you have to go to the Nav Drawer options'
+                      : '',
+                  style: GoogleFonts.orbitron(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
               const SizedBox(
                 height: 10,
               ),
-              // _userFuture![0].userType == 'Student'
-              //     ? const UserApplication()
-              //     : Container(),
             ],
           ),
         ),

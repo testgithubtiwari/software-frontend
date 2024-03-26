@@ -79,6 +79,7 @@ class _DesignCreditsState extends State<DesignCredits> {
                         children: snapshot.data!.map(
                           (designCredit) {
                             return DesignCreditContainer(
+                              // professorEmail: designCredit.,
                               userName: widget.userName,
                               email: widget.userEmail,
                               designCreditId: designCredit.sId ?? '',
@@ -105,6 +106,7 @@ class _DesignCreditsState extends State<DesignCredits> {
 }
 
 class DesignCreditContainer extends StatefulWidget {
+  // final String professorEmail;
   final String projectName;
   final String userName;
   final String email;
@@ -115,6 +117,7 @@ class DesignCreditContainer extends StatefulWidget {
   final String desc;
   const DesignCreditContainer(
       {required this.offeredBy,
+      // required this.professorEmail,
       required this.userName,
       required this.email,
       required this.designCreditId,
@@ -225,7 +228,7 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
                 MaterialPageRoute(
                   builder: (context) => ApplyDesignCredit(
                     userName: widget.userName,
-                    email: widget.email,
+                    useremail: widget.email,
                     projectName: widget.projectName,
                     prfessorName: widget.professorName,
                     designCreditId: widget.designCreditId,

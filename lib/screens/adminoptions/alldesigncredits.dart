@@ -113,10 +113,11 @@ class DesignCreditContainer extends StatefulWidget {
 class _DesignCreditContainerState extends State<DesignCreditContainer> {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.all(15),
       // height: 250,
-      width: 350,
+      width: size.width >= 400 ? 400 : 350,
       margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -129,15 +130,45 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
             text: widget.projectName,
             textType: 'Project-Name:',
           ),
+          SizedBox(
+            height: 10,
+          ),
+          const Divider(
+            height: 1,
+            color: Colors.white,
+          ),
+          SizedBox(
+            height: 10,
+          ),
           CustomText(
             text: widget.professorName,
             textType: 'Professor-Name:',
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          const Divider(
+            height: 1,
+            color: Colors.white,
+          ),
+          SizedBox(
+            height: 10,
           ),
           CustomText(
             text: widget.offeredBy,
             textType: 'Offered-By:',
           ),
           const SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          const Divider(
+            height: 1,
+            color: Colors.white,
+          ),
+          SizedBox(
             height: 10,
           ),
           const Text(
@@ -191,21 +222,21 @@ class CustomText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      // mainAxisAlignment: MainAxisAlignment.center,
-      // crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           child: Text(
             textType,
             style: GoogleFonts.poppins(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: 15,
               fontWeight: FontWeight.w600,
             ),
           ),
         ),
         const SizedBox(
-          width: 5,
+          width: 10,
         ),
         Expanded(
           child: Text(

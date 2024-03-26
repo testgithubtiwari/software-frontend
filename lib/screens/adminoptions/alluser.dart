@@ -107,7 +107,7 @@ class _UserContainerState extends State<UserContainer> {
           : const EdgeInsets.fromLTRB(0, 0, 0, 10),
       padding: const EdgeInsets.all(15),
       // height: 250,
-      width: 300,
+      width: size.width >= 400 ? 400 : 300,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: const Color.fromARGB(160, 0, 0, 0),
@@ -117,12 +117,19 @@ class _UserContainerState extends State<UserContainer> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Email-Id: ${widget.email}',
+            'Email-Id : ${widget.email}',
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 18,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
             ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          const Divider(
+            height: 1,
+            color: Colors.white,
           ),
           const SizedBox(
             height: 8,

@@ -21,11 +21,11 @@ class ApplyDesignCredit extends StatefulWidget {
   final String designCreditId;
   final String prfessorName;
   final String projectName;
-  final String email;
+  final String useremail;
   final String userName;
   const ApplyDesignCredit(
       {required this.prfessorName,
-      required this.email,
+      required this.useremail,
       required this.userName,
       required this.projectName,
       required this.designCreditId,
@@ -135,13 +135,20 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
               filename = null;
             });
             await Future.delayed(const Duration(seconds: 2));
-            sendEmail(
+            sendEmailUser(
               widget.userName,
-              widget.email,
+              widget.useremail,
               widget.prfessorName,
               widget.projectName,
               publicUrl,
             );
+            // sendEmailProfessor(
+            //   widget.userName,
+            //   widget.email,
+            //   widget.prfessorName,
+            //   widget.projectName,
+            //   publicUrl,
+            // );
           } else if (response.statusCode == 403) {
             // Request faile
             await Future.delayed(const Duration(seconds: 2));
@@ -171,12 +178,91 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
       });
       print('Error occurred during file upload: $e');
       showToast(
-          'An error occurred during upload. Please try again.', Colors.red);
+        'An error occurred during upload. Please try again.',
+        Colors.red,
+      );
       Navigator.pop(context);
     }
   }
 
-  void sendEmail(
+  void sendEmailUser(
+    String userName,
+    String receiverEmail,
+    String professorName,
+    String projectName,
+    String path,
+  ) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 20),
+              Text("Sending email. Please wait..."),
+            ],
+          ),
+        );
+      },
+    );
+    try {
+      Map<String, dynamic> requestBody = {
+        "from": adminEmail,
+        "to": receiverEmail,
+        "subject":
+            "Regarding the application for the Design Credit - $projectName",
+        "html": """
+          <html>
+          <body>
+            <p>Dear $userName,</p>
+            <p>Thanks for applying for the project '$projectName'.</p>
+            <p>$professorName will reach you at the earliest!</p>
+          <p>Here is your uploaded resume: <a href="$path">Resume Link</a></p>
+          </body>
+        </html>
+        """
+      };
+
+      String jsonBody = json.encode(requestBody);
+
+      final response = await http.post(
+        Uri.parse(
+          '$baseUrlMobileLocalhost/email/send-email',
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonBody,
+      );
+
+      if (response.statusCode == 200) {
+        await Future.delayed(Duration(seconds: 4));
+        Navigator.pop(context);
+        await Future.delayed(Duration(seconds: 2));
+        showToast(
+          'Please check your mail box for confirmation',
+          Colors.green,
+        );
+        print('Email sent successfully');
+      } else {
+        await Future.delayed(Duration(seconds: 2));
+        Navigator.pop(context);
+        await Future.delayed(Duration(seconds: 1));
+        showToast(
+          'There is error in mail send',
+          Colors.red,
+        );
+        print('Failed to send email: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error sending email: $error');
+    }
+  }
+
+  void sendEmailProfessor(
     String userName,
     String receiverEmail,
     String professorName,
