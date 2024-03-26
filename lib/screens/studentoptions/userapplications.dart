@@ -138,10 +138,11 @@ class _DesignCreditContainerState extends State<ApplicationContainer> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.all(15),
       // height: 250,
-      width: 350,
+      width: size.width >= 400 ? 400 : 350,
       margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -157,9 +158,23 @@ class _DesignCreditContainerState extends State<ApplicationContainer> {
           const SizedBox(
             height: 10,
           ),
+          const Divider(
+            color: Colors.white,
+            height: 1,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           CustomText(
             text: widget.description,
             textType: 'Description:',
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          const Divider(
+            color: Colors.white,
+            height: 1,
           ),
           const SizedBox(
             height: 10,
@@ -173,16 +188,16 @@ class _DesignCreditContainerState extends State<ApplicationContainer> {
                   style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontSize: 20,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(
-                  width: 8,
+                  width: 20,
                 ),
                 const Icon(
                   Icons.link,
                   color: Colors.white,
-                  size: 24,
+                  size: 30,
                 ),
               ],
             ),

@@ -10,7 +10,10 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DesignCredits extends StatefulWidget {
-  const DesignCredits({super.key});
+  final String userName;
+  final String userEmail;
+  const DesignCredits(
+      {required this.userEmail, required this.userName, super.key});
 
   @override
   State<DesignCredits> createState() => _DesignCreditsState();
@@ -76,6 +79,8 @@ class _DesignCreditsState extends State<DesignCredits> {
                         children: snapshot.data!.map(
                           (designCredit) {
                             return DesignCreditContainer(
+                              userName: widget.userName,
+                              email: widget.userEmail,
                               designCreditId: designCredit.sId ?? '',
                               desc: designCredit.description ?? '',
                               offeredBy: designCredit.offeredBy ?? '',
@@ -101,6 +106,8 @@ class _DesignCreditsState extends State<DesignCredits> {
 
 class DesignCreditContainer extends StatefulWidget {
   final String projectName;
+  final String userName;
+  final String email;
   final String designCreditId;
   final List<String> eligibleBranches;
   final String professorName;
@@ -108,6 +115,8 @@ class DesignCreditContainer extends StatefulWidget {
   final String desc;
   const DesignCreditContainer(
       {required this.offeredBy,
+      required this.userName,
+      required this.email,
       required this.designCreditId,
       required this.desc,
       required this.professorName,
@@ -122,10 +131,11 @@ class DesignCreditContainer extends StatefulWidget {
 class _DesignCreditContainerState extends State<DesignCreditContainer> {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.all(15),
       // height: 250,
-      width: 350,
+      width: size.width >= 400 ? 400 : 350,
       margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -142,9 +152,23 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
           const SizedBox(
             height: 10,
           ),
+          const Divider(
+            height: 1,
+            color: Colors.white,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           CustomText(
             text: widget.desc,
             textType: 'Description:',
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          const Divider(
+            height: 1,
+            color: Colors.white,
           ),
           const SizedBox(
             height: 10,
@@ -156,9 +180,23 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
           const SizedBox(
             height: 10,
           ),
+          const Divider(
+            height: 1,
+            color: Colors.white,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           CustomText(
             text: widget.offeredBy,
             textType: 'Offered-By:',
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          const Divider(
+            height: 1,
+            color: Colors.white,
           ),
           const SizedBox(
             height: 10,
@@ -185,8 +223,13 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      ApplyDesignCredit(designCreditId: widget.designCreditId),
+                  builder: (context) => ApplyDesignCredit(
+                    userName: widget.userName,
+                    email: widget.email,
+                    projectName: widget.projectName,
+                    prfessorName: widget.professorName,
+                    designCreditId: widget.designCreditId,
+                  ),
                 ),
               );
             },
@@ -196,7 +239,7 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
                 cursor: SystemMouseCursors.click,
                 child: Container(
                   height: 40,
-                  width: 100,
+                  width: 150,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     color: Colors.blue,

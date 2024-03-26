@@ -12,14 +12,24 @@ import 'package:DesignCredit/widgets/navdrawer.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApplyDesignCredit extends StatefulWidget {
   final String designCreditId;
-  const ApplyDesignCredit({required this.designCreditId, super.key});
+  final String prfessorName;
+  final String projectName;
+  final String email;
+  final String userName;
+  const ApplyDesignCredit(
+      {required this.prfessorName,
+      required this.email,
+      required this.userName,
+      required this.projectName,
+      required this.designCreditId,
+      super.key});
 
   @override
   State<ApplyDesignCredit> createState() => _ApplyDesignCreditState();
@@ -62,7 +72,7 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
       if (objFile != null) {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         String? userId = prefs.getString('userId');
-        print(userId);
+        // print(userId);
         final request = http.MultipartRequest(
           "POST",
           Uri.parse("$baseUrlMobileLocalhost/application/get-link"),
@@ -124,6 +134,14 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
               objFile = null;
               filename = null;
             });
+            await Future.delayed(const Duration(seconds: 2));
+            sendEmail(
+              widget.userName,
+              widget.email,
+              widget.prfessorName,
+              widget.projectName,
+              publicUrl,
+            );
           } else if (response.statusCode == 403) {
             // Request faile
             await Future.delayed(const Duration(seconds: 2));
@@ -158,46 +176,82 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
     }
   }
 
-  // Future<void> addDesignCredit(
-  //     String publicUrl, String? userId, String designCreditId) async {
-  //   try {
-  //     // Define the request body as a map
-  //     Map<String, dynamic> requestBody = {
-  //       'resumeLink': publicUrl,
-  //       'userId': userId,
-  //       'designCreditId': designCreditId,
-  //     };
+  void sendEmail(
+    String userName,
+    String receiverEmail,
+    String professorName,
+    String projectName,
+    String path,
+  ) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 20),
+              Text("Sending email. Please wait..."),
+            ],
+          ),
+        );
+      },
+    );
+    try {
+      Map<String, dynamic> requestBody = {
+        "from": adminEmail,
+        "to": receiverEmail,
+        "subject":
+            "Regarding the application for the Design Credit - $projectName",
+        "html": """
+          <html>
+          <body>
+            <p>Dear $userName,</p>
+            <p>Thanks for applying for the project '$projectName'.</p>
+            <p>$professorName will reach you at the earliest!</p>
+          <p>Here is your uploaded resume: <a href="$path">Resume Link</a></p>
+          </body>
+        </html>
+        """
+      };
 
-  //     // Make the POST request
-  //     var response = await http.post(
-  //       Uri.parse('$baseUrlMobileLocalhost/application/apply-design-credit'),
-  //       body: requestBody,
-  //     );
+      String jsonBody = json.encode(requestBody);
 
-  //     // Check the status code of the response
-  //     if (response.statusCode == 200) {
-  //       // Request was successful
-  //       print('Design credit added successfully');
-  //       await Future.delayed(const Duration(seconds: 2));
-  //       Navigator.pop(context);
-  //       await Future.delayed(const Duration(seconds: 1));
-  //       showToast('Upload Successful!', Colors.green);
-  //       setState(() {
-  //         objFile = null;
-  //         filename = null;
-  //       });
-  //     } else {
-  //       // Request failed
-  //       showToast(
-  //           'Design credit not added successfully! Try Again', Colors.red);
-  //       print(
-  //           'Failed to add design credit. Status code: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     // An error occurred during the request
-  //     print('Error adding design credit: $e');
-  //   }
-  // }
+      final response = await http.post(
+        Uri.parse(
+          '$baseUrlMobileLocalhost/email/send-email',
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonBody,
+      );
+
+      if (response.statusCode == 200) {
+        await Future.delayed(Duration(seconds: 4));
+        Navigator.pop(context);
+        await Future.delayed(Duration(seconds: 2));
+        showToast(
+          'Please check your mail box for confirmation',
+          Colors.green,
+        );
+        print('Email sent successfully');
+      } else {
+        await Future.delayed(Duration(seconds: 2));
+        Navigator.pop(context);
+        await Future.delayed(Duration(seconds: 1));
+        showToast(
+          'There is error in mail send',
+          Colors.red,
+        );
+        print('Failed to send email: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error sending email: $error');
+    }
+  }
 
   void showToast(String message, Color color) {
     Fluttertoast.showToast(
@@ -230,15 +284,16 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
           ),
           child: SingleChildScrollView(
             child: Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 size.width <= 1200
                     ? const MobileAppBar()
                     : const DeskTopAppBar(),
                 const SizedBox(
-                  height: 15,
+                  height: 35,
                 ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
+                  padding: const EdgeInsets.fromLTRB(5, 20, 5, 10),
                   height: size.width > 1200 ? 500 : 550,
                   width: size.width > 1200 ? 500 : size.width * 0.90,
                   decoration: BoxDecoration(
@@ -248,9 +303,22 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
                   ),
                   child: SingleChildScrollView(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const SizedBox(
                           height: 20,
+                        ),
+                        Text(
+                          'Please upload your resume!',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
                         ),
                         Container(
                           height: size.width >= 1200 ? 200 : size.width * 0.30,
@@ -263,7 +331,7 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
                           ),
                         ),
                         const SizedBox(
-                          height: 5,
+                          height: 10,
                         ),
                         objFile == null
                             ? const Text(
@@ -271,30 +339,31 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.black,
+                                  color: Colors.white,
                                 ),
                               )
                             : Text(
-                                'File Selected: $filename',
+                                '$filename'.toLowerCase(),
                                 style: const TextStyle(
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
                                 ),
                               ),
                         const SizedBox(
-                          height: 10,
+                          height: 30,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             GestureDetector(
                               onTap: chooseFileUsingFilePicker,
                               child: Container(
-                                margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                // margin:
+                                //     const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                 height: 50,
-                                width: 120,
-                                padding: const EdgeInsets.all(10),
+                                width: 150,
+                                // padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
                                   color: Colors.blue,
@@ -316,17 +385,18 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
                                 uploadSelectedFile(widget.designCreditId);
                               },
                               child: Container(
-                                margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                // margin:
+                                //     const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                 height: 50,
-                                width: 120,
-                                padding: const EdgeInsets.all(10),
+                                width: 150,
+                                // padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
                                   color: Colors.blue,
                                 ),
                                 child: const Center(
                                   child: Text(
-                                    'Upload File',
+                                    'Apply',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,

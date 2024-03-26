@@ -143,7 +143,10 @@ class _DeskTopAppBarState extends State<DeskTopAppBar> {
                       userFuture?[0].userType == 'Admin'
                           ? const AdminOptions()
                           : userFuture?[0].userType == 'Student'
-                              ? const StudentOption()
+                              ? StudentOption(
+                                  userName: userFuture?[0].name ?? '',
+                                  userEmail: userFuture?[0].email ?? '',
+                                )
                               : const ProfessorOptions(),
                       GestureDetector(
                         onTap: () {
@@ -295,7 +298,10 @@ class _ProfessorOptionsState extends State<ProfessorOptions> {
 }
 
 class StudentOption extends StatefulWidget {
-  const StudentOption({super.key});
+  final String userEmail;
+  final String userName;
+  const StudentOption(
+      {required this.userEmail, required this.userName, super.key});
 
   @override
   State<StudentOption> createState() => _StudentOptionState();
@@ -310,8 +316,13 @@ class _StudentOptionState extends State<StudentOption> {
         ClickableText(
           text: 'All Design Credits',
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const DesignCredits()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DesignCredits(
+                          userName: widget.userName,
+                          userEmail: widget.userEmail,
+                        )));
           },
         ),
         const SizedBox(

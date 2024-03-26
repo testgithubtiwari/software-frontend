@@ -140,7 +140,10 @@ class _NavDrawerState extends State<NavDrawer> {
                   userFuture?[0].userType == 'Admin'
                       ? const AdminOptions()
                       : userFuture?[0].userType == 'Student'
-                          ? const StudentOptions()
+                          ? StudentOptions(
+                              userName: userFuture?[0].name ?? '',
+                              userEmail: userFuture?[0].email ?? '',
+                            )
                           : const ProfessorOptions(),
                   const SizedBox(
                     height: 20,
@@ -183,7 +186,10 @@ class _AdminOptionsState extends State<AdminOptions> {
 }
 
 class StudentOptions extends StatefulWidget {
-  const StudentOptions({super.key});
+  final String userEmail;
+  final String userName;
+  const StudentOptions(
+      {required this.userEmail, required this.userName, super.key});
 
   @override
   State<StudentOptions> createState() => _StudentOptionsState();
@@ -192,9 +198,15 @@ class StudentOptions extends StatefulWidget {
 class _StudentOptionsState extends State<StudentOptions> {
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        OptionContainer(screen: DesignCredits(), text: 'All Design Credits'),
+        OptionContainer(
+          screen: DesignCredits(
+            userName: widget.userName,
+            userEmail: widget.userEmail,
+          ),
+          text: 'All Design Credits',
+        ),
         SizedBox(
           height: 20,
         ),
@@ -221,12 +233,16 @@ class _ProfessorOptionsState extends State<ProfessorOptions> {
     return const Column(
       children: [
         OptionContainer(
-            screen: AddDesignCredits(), text: 'Float Design-Credits'),
+          screen: AddDesignCredits(),
+          text: 'Float Design-Credits',
+        ),
         SizedBox(
           height: 20,
         ),
         OptionContainer(
-            screen: ViewYourDesignCredits(), text: 'View your Design Credits'),
+          screen: ViewYourDesignCredits(),
+          text: 'View your Design Credits',
+        ),
       ],
     );
   }
@@ -271,7 +287,7 @@ class _OptionContainerState extends State<OptionContainer> {
       child: Container(
         margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         padding: const EdgeInsets.all(10),
-        height: 70,
+        height: 80,
         width: size.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),

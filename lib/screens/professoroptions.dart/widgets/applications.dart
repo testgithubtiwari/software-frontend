@@ -87,6 +87,8 @@ class _ApplicationsState extends State<Applications> {
                             children: _applications.map((entry) {
                               final application = entry.value;
                               return AllApplicationsContainer(
+                                rollNumber:
+                                    application.userId?.rollNumber ?? '',
                                 name: application.userId?.name ?? '',
                                 // projectName:
                                 //     application.designCreditId?.projectName ??
@@ -109,12 +111,14 @@ class AllApplicationsContainer extends StatefulWidget {
   final String name;
   final String email;
   final String resumeLink;
+  final String rollNumber;
   // final String projectName;
   const AllApplicationsContainer({
     required this.name,
     // required this.projectName,
     required this.resumeLink,
     required this.email,
+    required this.rollNumber,
     super.key,
   });
 
@@ -134,10 +138,11 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Container(
       // height: 200,
-      width: 350,
-      padding: const EdgeInsets.all(15),
+      width: size.width >= 400 ? 400 : 350,
+      padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 12, 44, 43),
@@ -147,36 +152,66 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
-            text: widget.name,
-            textType: 'Applied By:',
+            text: widget.name.toUpperCase(),
+            textType: 'Applied By :',
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          const Divider(
+            color: Colors.white,
+            height: 1,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          CustomText(
+            text: widget.rollNumber.toUpperCase(),
+            textType: 'Roll Number :',
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          const Divider(
+            color: Colors.white,
+            height: 1,
+          ),
+          SizedBox(
+            height: 10,
           ),
           CustomText(
             text: widget.email,
-            textType: 'Email-Id:',
+            textType: 'Email-Id :',
           ),
-          // CustomText(
-          //   // text: widget.projectName,
-          //   textType: 'ProjectName:',
-          // ),
+          SizedBox(
+            height: 10,
+          ),
+          const Divider(
+            color: Colors.white,
+            height: 1,
+          ),
+          SizedBox(
+            height: 10,
+          ),
           GestureDetector(
             onTap: _openResumeLink,
             child: Row(
               children: [
                 Text(
-                  'ResumeLink:',
+                  'Resume :',
                   style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontSize: 20,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(
-                  width: 8,
+                  width: 20,
                 ),
                 const Icon(
                   Icons.link,
                   color: Colors.white,
-                  size: 24,
+                  size: 30,
                 ),
               ],
             ),
@@ -204,7 +239,7 @@ class CustomText extends StatelessWidget {
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 18,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
@@ -217,7 +252,7 @@ class CustomText extends StatelessWidget {
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 15,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),

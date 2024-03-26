@@ -127,10 +127,11 @@ class DesignCreditContainer extends StatefulWidget {
 class _DesignCreditContainerState extends State<DesignCreditContainer> {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.all(15),
       // height: 250,
-      width: 350,
+      width: size.width >= 400 ? 400 : 350,
       margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -143,16 +144,26 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
             text: widget.projectName,
             textType: 'Project-Name:',
           ),
-          // CustomText(
-          //   text: widget.professorName,
-          //   textType: 'Professor-Name:',
-          // ),
+          const SizedBox(
+            height: 10,
+          ),
+          const Divider(
+            color: Colors.white,
+            height: 1,
+          ),
           const SizedBox(
             height: 10,
           ),
           CustomText(
             text: widget.offeredBy,
             textType: 'Offered-By:',
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          const Divider(
+            color: Colors.white,
+            height: 1,
           ),
           const SizedBox(
             height: 10,
@@ -178,7 +189,7 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
             height: 15,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
                 onTap: () {},
@@ -218,7 +229,7 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
                   cursor: SystemMouseCursors.click,
                   child: Container(
                     height: 50,
-                    width: 120,
+                    width: 150,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.blue,

@@ -146,8 +146,8 @@ class _AddDesignCreditsState extends State<AddDesignCredits> {
                         height: 25,
                       ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
-                  height: 550,
+                  padding: const EdgeInsets.fromLTRB(5, 20, 5, 10),
+                  height: 600,
                   width: size.width > 1200 ? 700 : size.width * 0.90,
                   decoration: BoxDecoration(
                     border: Border.all(width: 1, color: Colors.amberAccent),
@@ -267,7 +267,7 @@ class _AddDesignCreditsState extends State<AddDesignCredits> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            print(projectName);
+                            // print(projectName);
                             addDesignCredit(
                               projectName,
                               elegibleBranches,
@@ -278,9 +278,9 @@ class _AddDesignCreditsState extends State<AddDesignCredits> {
                           child: MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: Container(
-                              height: 50,
+                              height: 60,
                               width:
-                                  size.width > 1200 ? 300 : size.width * 0.45,
+                                  size.width > 1200 ? 300 : size.width * 0.65,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 color: const Color.fromARGB(255, 12, 44, 43),

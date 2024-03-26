@@ -43,7 +43,8 @@ class _ProfilePageState extends State<UpdateProfilePage> {
     int statusCode = result.item2;
     if (statusCode == 401) {
       showToast(
-          'Invalid token, Please Log In again. Redirecting you to Login Page');
+          'Invalid token, Please Log In again. Redirecting you to Login Page',
+          Colors.red);
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('accessToken', '');
       prefs.setString('refreshToken', '');
@@ -52,7 +53,8 @@ class _ProfilePageState extends State<UpdateProfilePage> {
           MaterialPageRoute(builder: (context) => const LoginScreen()));
     } else if (statusCode == 404) {
       showToast(
-          'User not found! Please register first.Redirecting you to SignUp Page');
+          'User not found! Please register first.Redirecting you to SignUp Page',
+          Colors.red);
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('accessToken', '');
       prefs.setString('refreshToken', '');
@@ -60,7 +62,7 @@ class _ProfilePageState extends State<UpdateProfilePage> {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const SignUp()));
     } else if (statusCode == 500) {
-      showToast('Internal Server Error! Please try after sometime');
+      showToast('Internal Server Error! Please try after sometime', Colors.red);
     } else {
       _userFuture = result.item1;
       final prefs = await SharedPreferences.getInstance();
@@ -108,7 +110,7 @@ class _ProfilePageState extends State<UpdateProfilePage> {
         'branch': branch,
         'rollnumber': rollnumber,
       };
-      print(requestBody);
+      // print(requestBody);
 
       // Make the POST request
       var response = await http.post(
@@ -128,14 +130,14 @@ class _ProfilePageState extends State<UpdateProfilePage> {
         await prefs.setString('name', name);
         Navigator.of(context).pop();
 
-        showToast('Profile Updated Successfully!!');
+        showToast('Profile Updated Successfully!!', Colors.blue);
         checkValidToken();
       } else {
         await Future.delayed(const Duration(seconds: 2));
 
         Navigator.of(context).pop();
 
-        showToast('Failed to update profile');
+        showToast('Failed to update profile', Colors.red);
         throw Exception('Failed to update profile: ${response.reasonPhrase}');
       }
     } catch (e) {
@@ -143,18 +145,18 @@ class _ProfilePageState extends State<UpdateProfilePage> {
 
       Navigator.of(context).pop();
 
-      showToast('Network Error! Try again after sometime');
+      showToast('Network Error! Try again after sometime', Colors.red);
       print('Error updating profile: $e');
     }
   }
 
-  void showToast(String message) {
+  void showToast(String message, Color color) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,
       timeInSecForIosWeb: 1,
-      backgroundColor: Colors.red,
+      backgroundColor: color,
       textColor: Colors.white,
       fontSize: 16.0,
     );
@@ -177,6 +179,8 @@ class _ProfilePageState extends State<UpdateProfilePage> {
           ),
           child: SingleChildScrollView(
             child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 size.width > 1200 ? Container() : const MobileAppBar(),
                 size.width > 1200
@@ -188,7 +192,7 @@ class _ProfilePageState extends State<UpdateProfilePage> {
                       ),
                 Container(
                   padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
-                  height: 550,
+                  height: 650,
                   width: size.width > 1200 ? 700 : size.width * 0.90,
                   decoration: BoxDecoration(
                     border: Border.all(width: 1, color: Colors.amberAccent),
@@ -198,7 +202,7 @@ class _ProfilePageState extends State<UpdateProfilePage> {
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      // crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const SizedBox(
                           height: 20,
