@@ -1,16 +1,52 @@
-# frontend
+# Software-Frontend
 
-A new Flutter project.
+Frontend is made in Flutter which is a cross platforms for both ios and android with the same codebase and also I have integrated for web in this project and the web is deployed on the AWS amplify server while there is Continous Integration and Continous deployemnet software development strategy implemented so that developer focus more time to write code not to waste time on debugging the issue.
 
-## Getting Started
+## Follow these steps to setup and run the project
 
-This project is a starting point for a Flutter application.
+### Step1: Check the flutter is installed on your pc or not.
 
-A few resources to get you started if this is your first Flutter project:
+Open terminal and type flutter --verssion
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```bash
+flutter --version
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+If you see flutter command not found then you have install the flutter and also set the paths in the enviroment variables so that terminal understood the command.
+
+Now check for any requirements, type flutter --doctor in the terminal
+
+```bash
+flutter doctor
+```
+
+Here if you see Doctor found issues in X category then you have to work upon that category and see how to reslove that because without resolve that you can't able to run any flutter project.
+
+### I hope till now you have setup the flutter correctly.
+
+#### Now here are the few commands to run this project.
+
+Open the terminal and go to the root directory of the project where you can see the pubspec.yaml file and now run
+
+```bash
+flutter pub get
+```
+
+It will install all the dependencies required for this project.
+
+```bash
+flutter run
+```
+
+It will show the option ti run the flutter project on the available devices it may be chrome, emulator, etc.
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
