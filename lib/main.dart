@@ -13,7 +13,7 @@ void main() async {
     systemNavigationBarColor: Colors.grey,
     statusBarColor: Colors.black,
   ));
-  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  // FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   runApp(const MyApp());
 }
 
@@ -25,21 +25,21 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final PushNotificationService _notificationService =
-      PushNotificationService();
-  @override
-  void initState() {
-    print('Hello !');
-    FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-    _firebaseMessaging.getToken().then((token) {
-      print("token is $token");
-    });
-    super.initState();
-  }
+  // final PushNotificationService _notificationService =
+  //     PushNotificationService();
+  // @override
+  // void initState() {
+  //   print('Hello !');
+  //   FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  //   _firebaseMessaging.getToken().then((token) {
+  //     print("token is $token");
+  //   });
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    _notificationService.initialize();
+    // _notificationService.initialize();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Design Credit',

@@ -97,18 +97,19 @@ class _HomePageState extends State<HomePage> {
               ),
               Container(
                 padding: EdgeInsets.all(10),
-                child: Text(
-                  _userFuture![0].userType == 'Admin'
-                      ? 'Weclome on admin pannel! You can see all the'
-                          'users, all design credits and also all the application. To see these you have to go to the Nav Drawer options'
-                      : '',
-                  style: GoogleFonts.orbitron(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+                child: _userFuture != null && _userFuture!.isNotEmpty
+                    ? Text(
+                        _userFuture![0].userType == 'Admin'
+                            ? 'Welcome to the admin panel! You can see all the users, all design credits, and also all the applications. To see these, you have to go to the Nav Drawer options.'
+                            : '',
+                        style: GoogleFonts.orbitron(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    : SizedBox(),
               ),
               const SizedBox(
                 height: 10,
