@@ -1,7 +1,8 @@
+// ignore_for_file: unused_import
+
 import 'package:DesignCredit/firebase_options.dart';
 import 'package:DesignCredit/pushnotificationservice.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:DesignCredit/screens/auth/loginscreen.dart';
 import 'package:flutter/services.dart';
