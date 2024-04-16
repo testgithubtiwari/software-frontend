@@ -58,7 +58,6 @@ class _HomePageState extends State<HomePage> {
       _userFuture = result.item1;
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('userId', _userFuture?[0].sId ?? '');
-      print(_userFuture?[0].email);
     }
   }
 

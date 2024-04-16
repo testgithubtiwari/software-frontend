@@ -3,9 +3,11 @@
 import 'package:DesignCredit/api/isprofilecompleted.dart';
 import 'package:DesignCredit/screens/adminoptions/allapplications.dart';
 import 'package:DesignCredit/screens/adminoptions/alluser.dart';
+import 'package:DesignCredit/screens/homepage/homepage.dart';
 import 'package:DesignCredit/screens/professoroptions.dart/adddesigncredit.dart';
 import 'package:DesignCredit/screens/professoroptions.dart/viewdesigncredit.dart';
 import 'package:DesignCredit/screens/studentoptions/designcredits.dart';
+import 'package:DesignCredit/screens/studentoptions/userapplications.dart';
 import 'package:DesignCredit/widgets/constants.dart';
 import 'package:DesignCredit/widgets/profilepage.dart';
 // import 'package:flutter/cupertino.dart';
@@ -108,7 +110,12 @@ class _DeskTopAppBarState extends State<DeskTopAppBar> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomePage()));
+                  },
                   child: const MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: SizedBox(
@@ -330,7 +337,12 @@ class _StudentOptionState extends State<StudentOption> {
         ),
         ClickableText(
           text: 'My Applications',
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const UserApplication()));
+          },
         ),
         const SizedBox(
           width: 30,

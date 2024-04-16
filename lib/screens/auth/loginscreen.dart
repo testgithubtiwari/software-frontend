@@ -323,19 +323,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 )
               : Row(
                   children: [
+                    // Container(
+                    //   height: size.height,
+                    //   width: size.width * 0.50,
+                    //   decoration: const BoxDecoration(
+                    //     image: DecorationImage(
+                    //       image: AssetImage(loginBackgroundImage),
+                    //       fit: BoxFit.fill,
+                    //     ),
+                    //   ),
+                    // ),
                     Container(
                       height: size.height,
-                      width: size.width * 0.50,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(loginBackgroundImage),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: size.height,
-                      width: size.width * 0.50,
+                      width: size.width,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(iitjCampus),
@@ -346,15 +346,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            height: 600,
+                            height: 500,
                             width: 500,
                             decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 1,
-                                color: Colors.grey,
-                              ),
+                              // border: Border.all(
+                              //   width: 1,
+                              //   color: Colors.,
+                              // ),
                               borderRadius: BorderRadius.circular(20),
-                              color: const Color.fromARGB(125, 0, 0, 0),
+                              color: Color.fromARGB(150, 0, 0, 0),
                             ),
                             child: Column(
                               children: [

@@ -114,81 +114,84 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Container(
-      padding: const EdgeInsets.all(15),
-      // height: 250,
-      width: size.width >= 400 ? 400 : 350,
-      margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: const Color.fromARGB(255, 12, 44, 43),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomText(
-            text: widget.projectName,
-            textType: 'Project-Name:',
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          const Divider(
-            height: 1,
-            color: Colors.white,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          CustomText(
-            text: widget.professorName,
-            textType: 'Professor-Name:',
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          const Divider(
-            height: 1,
-            color: Colors.white,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          CustomText(
-            text: widget.offeredBy,
-            textType: 'Offered-By:',
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          const Divider(
-            height: 1,
-            color: Colors.white,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          const Text(
-            'Eligible Branches:',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+    return Card(
+      elevation: 5,
+      child: Container(
+        padding: const EdgeInsets.all(15),
+        // height: 250,
+        width: size.width >= 400 ? 400 : 350,
+        margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: const Color.fromARGB(255, 12, 44, 43),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomText(
+              text: widget.projectName,
+              textType: 'Project-Name:',
             ),
-          ),
-          Wrap(
-            spacing: 5,
-            runSpacing: 5,
-            children: widget.eligibleBranches.map(
-              (branches) {
-                return CustomText1(text: branches);
-              },
-            ).toList(),
-          ),
-        ],
+            SizedBox(
+              height: 10,
+            ),
+            const Divider(
+              height: 1,
+              color: Colors.white,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            CustomText(
+              text: widget.professorName,
+              textType: 'Professor-Name:',
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            const Divider(
+              height: 1,
+              color: Colors.white,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            CustomText(
+              text: widget.offeredBy,
+              textType: 'Offered-By:',
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            const Divider(
+              height: 1,
+              color: Colors.white,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            const Text(
+              'Eligible Branches:',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Wrap(
+              spacing: 5,
+              runSpacing: 5,
+              children: widget.eligibleBranches.map(
+                (branches) {
+                  return CustomText1(text: branches);
+                },
+              ).toList(),
+            ),
+          ],
+        ),
       ),
     );
   }

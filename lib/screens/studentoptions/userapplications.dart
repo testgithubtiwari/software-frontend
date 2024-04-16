@@ -3,9 +3,11 @@
 import 'package:DesignCredit/api/allapplicationsapi.dart';
 import 'package:DesignCredit/models/allapplicationusermodel.dart';
 import 'package:DesignCredit/widgets/constants.dart';
+import 'package:DesignCredit/widgets/desktopappbar.dart';
 import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -63,7 +65,7 @@ class _UserApplicationState extends State<UserApplication> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const MobileAppBar(),
+                size.width >= 1200 ? DeskTopAppBar() : MobileAppBar(),
                 const SizedBox(
                   height: 20,
                 ),
@@ -194,10 +196,13 @@ class _DesignCreditContainerState extends State<ApplicationContainer> {
                 const SizedBox(
                   width: 20,
                 ),
-                const Icon(
-                  Icons.link,
-                  color: Colors.white,
-                  size: 30,
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: const Icon(
+                    Icons.link,
+                    color: Colors.white,
+                    size: 30,
+                  ),
                 ),
               ],
             ),

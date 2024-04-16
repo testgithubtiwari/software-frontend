@@ -25,7 +25,7 @@ class UpdateProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<UpdateProfilePage> {
   List<UserModelDesignCredit>? _userFuture;
-  String? _email; // Make _email nullable
+  String? _email;
   String? _name;
   String? _userType;
   String? _selectedBranch;
@@ -64,16 +64,15 @@ class _ProfilePageState extends State<UpdateProfilePage> {
     } else if (statusCode == 500) {
       showToast('Internal Server Error! Please try after sometime', Colors.red);
     } else {
+      print(_userFuture);
       _userFuture = result.item1;
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('userId', _userFuture?[0].sId ?? '');
-      _email =
-          _userFuture?[0].email ?? ''; // Update _email with the fetched email
+      _email = _userFuture?[0].email ?? '';
       _name = _userFuture?[0].name ?? '';
       _userType = _userFuture?[0].userType ?? '';
-      _selectedBranch = _userFuture?[0].branch ?? '';
+      _selectedBranch = _userFuture?[0].branch!.toUpperCase() ?? '';
       _rollNumber = _userFuture?[0].rollNumber ?? '';
-
       setState(() {});
     }
   }
@@ -191,9 +190,10 @@ class _ProfilePageState extends State<UpdateProfilePage> {
                         height: 25,
                       ),
                 Container(
+                  margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
                   padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
                   height: 650,
-                  width: size.width > 1200 ? 700 : size.width * 0.90,
+                  width: size.width > 1200 ? 600 : size.width * 0.90,
                   decoration: BoxDecoration(
                     border: Border.all(width: 1, color: Colors.amberAccent),
                     borderRadius: BorderRadius.circular(15),
