@@ -71,13 +71,15 @@ class _ProfilePageState extends State<UpdateProfilePage> {
       _email = _userFuture?[0].email ?? '';
       _name = _userFuture?[0].name ?? '';
       _userType = _userFuture?[0].userType ?? '';
-      _selectedBranch = _userFuture?[0].branch!.toUpperCase() ?? '';
-      _rollNumber = _userFuture?[0].rollNumber ?? '';
+      if (_userType == 'Student') {
+        _selectedBranch = _userFuture![0].branch ?? '';
+        _rollNumber = _userFuture![0].rollNumber ?? '';
+      }
       setState(() {});
     }
   }
 
-  void updateProfile(
+  void updateProfileStudent(
     String name,
     String email,
     String branch,
@@ -108,6 +110,74 @@ class _ProfilePageState extends State<UpdateProfilePage> {
         'email': email,
         'branch': branch,
         'rollnumber': rollnumber,
+      };
+      // print(requestBody);
+
+      // Make the POST request
+      var response = await http.post(
+        Uri.parse('$baseUrlMobileLocalhost/user/update-profile'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> responseData = jsonDecode(response.body);
+        print(responseData);
+
+        await Future.delayed(const Duration(seconds: 2));
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('name', name);
+        Navigator.of(context).pop();
+
+        showToast('Profile Updated Successfully!!', Colors.blue);
+        checkValidToken();
+      } else {
+        await Future.delayed(const Duration(seconds: 2));
+
+        Navigator.of(context).pop();
+
+        showToast('Failed to update profile', Colors.red);
+        throw Exception('Failed to update profile: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      await Future.delayed(const Duration(seconds: 2));
+
+      Navigator.of(context).pop();
+
+      showToast('Network Error! Try again after sometime', Colors.red);
+      print('Error updating profile: $e');
+    }
+  }
+
+  void updateProfile(
+    String name,
+    String email,
+  ) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 20),
+              Text("Updating.."),
+            ],
+          ),
+        );
+      },
+    );
+    final prefs = await SharedPreferences.getInstance();
+    String? userid = prefs.getString('userId');
+    try {
+      // Construct the request body
+      Map<String, dynamic> requestBody = {
+        'userId': userid,
+        'name': name,
+        'email': email,
       };
       // print(requestBody);
 
@@ -293,7 +363,8 @@ class _ProfilePageState extends State<UpdateProfilePage> {
                                 ),
                               )
                             : Container(),
-                        _selectedBranch != null && _selectedBranch != ''
+
+                        _userType == 'Student'
                             ? Padding(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 20,
@@ -348,38 +419,73 @@ class _ProfilePageState extends State<UpdateProfilePage> {
                         const SizedBox(
                           height: 20,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            updateProfile(
-                              _name!,
-                              _email!,
-                              _selectedBranch!,
-                              _rollNumber!,
-                            );
-                          },
-                          child: MouseRegion(
-                            cursor: SystemMouseCursors.click,
-                            child: Container(
-                              height: 50,
-                              width:
-                                  size.width > 1200 ? 300 : size.width * 0.45,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: const Color.fromARGB(255, 12, 44, 43),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Update',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
+                        _userType == 'Student'
+                            ? GestureDetector(
+                                onTap: () {
+                                  updateProfileStudent(
+                                    _name!,
+                                    _email!,
+                                    _selectedBranch!,
+                                    _rollNumber!,
+                                  );
+                                },
+                                child: MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: Container(
+                                    height: 50,
+                                    width: size.width > 1200
+                                        ? 300
+                                        : size.width * 0.45,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color:
+                                          const Color.fromARGB(255, 12, 44, 43),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Update',
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : GestureDetector(
+                                onTap: () {
+                                  updateProfile(
+                                    _name!,
+                                    _email!,
+                                  );
+                                },
+                                child: MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: Container(
+                                    height: 50,
+                                    width: size.width > 1200
+                                        ? 300
+                                        : size.width * 0.45,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color:
+                                          const Color.fromARGB(255, 12, 44, 43),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Update',
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
                         const SizedBox(
                           height: 10,
                         ),
