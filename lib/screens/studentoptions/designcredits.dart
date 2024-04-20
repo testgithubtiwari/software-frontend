@@ -79,13 +79,13 @@ class _DesignCreditsState extends State<DesignCredits> {
                         children: snapshot.data!.map(
                           (designCredit) {
                             return DesignCreditContainer(
-                              // professorEmail: designCredit.,
+                              professorEmail: designCredit.userId!.email ?? '',
                               userName: widget.userName,
                               email: widget.userEmail,
                               designCreditId: designCredit.sId ?? '',
                               desc: designCredit.description ?? '',
                               offeredBy: designCredit.offeredBy ?? '',
-                              professorName: designCredit.professorName ?? '',
+                              professorName: designCredit.userId!.name ?? '',
                               projectName: designCredit.projectName ?? '',
                               eligibleBranches:
                                   designCredit.eligibleBranches ?? [],
@@ -106,7 +106,7 @@ class _DesignCreditsState extends State<DesignCredits> {
 }
 
 class DesignCreditContainer extends StatefulWidget {
-  // final String professorEmail;
+  final String professorEmail;
   final String projectName;
   final String userName;
   final String email;
@@ -117,7 +117,7 @@ class DesignCreditContainer extends StatefulWidget {
   final String desc;
   const DesignCreditContainer(
       {required this.offeredBy,
-      // required this.professorEmail,
+      required this.professorEmail,
       required this.userName,
       required this.email,
       required this.designCreditId,
@@ -227,6 +227,7 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => ApplyDesignCredit(
+                    professorEmail: widget.professorEmail,
                     userName: widget.userName,
                     useremail: widget.email,
                     projectName: widget.projectName,

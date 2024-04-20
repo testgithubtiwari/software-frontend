@@ -36,18 +36,26 @@ class _DeskTopAppBarState extends State<DeskTopAppBar> {
   @override
   void initState() {
     super.initState();
-    getUserDetails();
-    checkProfileCompleteness();
+    initializePage();
   }
 
-  void getUserDetails() async {
+  void initializePage() async {
+    await Future.wait([
+      getUserDetails(),
+      checkProfileCompleteness(),
+    ]);
+
+    setState(() {});
+  }
+
+  Future<void> getUserDetails() async {
     Tuple2<List<UserModelDesignCredit>, int> result = await fetchUserData();
     setState(() {
       userFuture = result.item1;
     });
   }
 
-  void checkProfileCompleteness() async {
+  Future<void> checkProfileCompleteness() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       String? userId = prefs.getString('userId');

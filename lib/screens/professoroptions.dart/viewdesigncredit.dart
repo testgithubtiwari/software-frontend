@@ -28,7 +28,7 @@ class _ViewYourDesignCreditsState extends State<ViewYourDesignCredits> {
   void getProfessorName() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? professorName = prefs.getString('name');
-    // print(professorName);
+    print(professorName);
     setState(() {
       yourDesignCreditList = filterDesignCredits(professorName!);
     });

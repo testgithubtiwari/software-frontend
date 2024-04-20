@@ -96,6 +96,7 @@ class _AllDesignCreditsState extends State<AllDesignCredits> {
 
 class DesignCreditContainer extends StatefulWidget {
   final String projectName;
+  // final
   final List<String> eligibleBranches;
   final String professorName;
   final String offeredBy;

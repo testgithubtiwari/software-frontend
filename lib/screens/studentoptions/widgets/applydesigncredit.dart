@@ -20,12 +20,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ApplyDesignCredit extends StatefulWidget {
   final String designCreditId;
   final String prfessorName;
+  final String professorEmail;
   final String projectName;
   final String useremail;
   final String userName;
   const ApplyDesignCredit(
       {required this.prfessorName,
       required this.useremail,
+      required this.professorEmail,
       required this.userName,
       required this.projectName,
       required this.designCreditId,
@@ -118,7 +120,8 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
           // Make the POST request
           var response = await http.post(
             Uri.parse(
-                '$baseUrlMobileLocalhost/application/apply-design-credit'),
+              '$baseUrlMobileLocalhost/application/apply-design-credit',
+            ),
             body: requestBody,
           );
 
@@ -142,13 +145,14 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
               widget.projectName,
               publicUrl,
             );
-            // sendEmailProfessor(
-            //   widget.userName,
-            //   widget.email,
-            //   widget.prfessorName,
-            //   widget.projectName,
-            //   publicUrl,
-            // );
+            await Future.delayed(const Duration(seconds: 2));
+            sendEmailProfessor(
+              widget.userName,
+              widget.professorEmail,
+              widget.prfessorName,
+              widget.projectName,
+              publicUrl,
+            );
           } else if (response.statusCode == 403) {
             // Request faile
             await Future.delayed(const Duration(seconds: 2));
@@ -263,6 +267,7 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
   }
 
   void sendEmailProfessor(
+    // String professorName,
     String userName,
     String receiverEmail,
     String professorName,
@@ -289,14 +294,15 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
         "from": adminEmail,
         "to": receiverEmail,
         "subject":
-            "Regarding the application for the Design Credit - $projectName",
+            "Application received from $userName for the Project - $projectName",
         "html": """
           <html>
           <body>
-            <p>Dear $userName,</p>
-            <p>Thanks for applying for the project '$projectName'.</p>
-            <p>$professorName will reach you at the earliest!</p>
-          <p>Here is your uploaded resume: <a href="$path">Resume Link</a></p>
+            <p>Dear $professorName,</p>
+            <p>One applicant has applied the design credit '$projectName'.</p>
+            <p>Applicant Name is $userName</p>
+          <p>Here is the uploaded resume for your reference: <a href="$path">Resume Link</a></p>
+          <p>Please check if the candiadate is eleigible for the design credit project that he has applied</p>
           </body>
         </html>
         """
@@ -319,10 +325,10 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
         Navigator.pop(context);
         await Future.delayed(Duration(seconds: 2));
         showToast(
-          'Please check your mail box for confirmation',
+          'Email is sent to the respective professor!',
           Colors.green,
         );
-        print('Email sent successfully');
+        print('Email to professor sent successfully');
       } else {
         await Future.delayed(Duration(seconds: 2));
         Navigator.pop(context);

@@ -60,6 +60,7 @@ class _AddDesignCreditsState extends State<AddDesignCredits> {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       String? professorName = prefs.getString('name');
+      String? professorId = prefs.getString('userId');
       eligibleBranches = eligibleBranches.replaceAll(' ', ',');
 
       var response = await http.post(
@@ -70,8 +71,9 @@ class _AddDesignCreditsState extends State<AddDesignCredits> {
         body: {
           'projectName': projectName,
           'eligibleBranches': eligibleBranches,
-          'professorName': professorName,
+          'userId': professorId,
           'offeredBy': offeredBy,
+          'professorName': professorName,
           'description': desc,
         },
       );
