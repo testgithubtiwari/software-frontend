@@ -2,6 +2,7 @@
 
 import 'package:DesignCredit/api/isprofilecompleted.dart';
 import 'package:DesignCredit/screens/adminoptions/allapplications.dart';
+import 'package:DesignCredit/screens/adminoptions/alldesigncredits.dart';
 import 'package:DesignCredit/screens/adminoptions/alluser.dart';
 import 'package:DesignCredit/screens/homepage/homepage.dart';
 import 'package:DesignCredit/screens/professoroptions.dart/adddesigncredit.dart';
@@ -159,7 +160,6 @@ class _DeskTopAppBarState extends State<DeskTopAppBar> {
                           ? const AdminOptions()
                           : userFuture?[0].userType == 'Student'
                               ? StudentOption(
-                                  userName: userFuture?[0].name ?? '',
                                   userEmail: userFuture?[0].email ?? '',
                                 )
                               : const ProfessorOptions(),
@@ -263,7 +263,12 @@ class _AdminOptionsState extends State<AdminOptions> {
         ),
         ClickableText(
           text: 'All DesignCredits',
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AllDesignCredits()));
+          },
         ),
       ],
     );
@@ -314,9 +319,8 @@ class _ProfessorOptionsState extends State<ProfessorOptions> {
 
 class StudentOption extends StatefulWidget {
   final String userEmail;
-  final String userName;
-  const StudentOption(
-      {required this.userEmail, required this.userName, super.key});
+
+  const StudentOption({required this.userEmail, super.key});
 
   @override
   State<StudentOption> createState() => _StudentOptionState();
@@ -335,7 +339,6 @@ class _StudentOptionState extends State<StudentOption> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => DesignCredits(
-                          userName: widget.userName,
                           userEmail: widget.userEmail,
                         )));
           },

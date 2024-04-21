@@ -145,27 +145,58 @@ class _UserContainerState extends State<UserContainer> {
           const SizedBox(
             height: 8,
           ),
+          const Divider(
+            height: 1,
+            color: Colors.white,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
           widget.userType == 'Student'
-              ? Text(
-                  'Roll-Number: ${widget.rollNumber}',
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Roll-Number: ${widget.rollNumber}',
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const Divider(
+                      height: 1,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                  ],
                 )
               : Container(),
           const SizedBox(
             height: 8,
           ),
           widget.userType == 'Student'
-              ? Text(
-                  'Branch: ${widget.branch}',
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Branch: ${widget.branch}',
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const Divider(
+                      height: 1,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                  ],
                 )
               : Container(),
           const SizedBox(

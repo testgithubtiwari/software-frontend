@@ -10,10 +10,8 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DesignCredits extends StatefulWidget {
-  final String userName;
   final String userEmail;
-  const DesignCredits(
-      {required this.userEmail, required this.userName, super.key});
+  const DesignCredits({required this.userEmail, super.key});
 
   @override
   State<DesignCredits> createState() => _DesignCreditsState();
@@ -80,7 +78,6 @@ class _DesignCreditsState extends State<DesignCredits> {
                           (designCredit) {
                             return DesignCreditContainer(
                               professorEmail: designCredit.userId!.email ?? '',
-                              userName: widget.userName,
                               email: widget.userEmail,
                               designCreditId: designCredit.sId ?? '',
                               desc: designCredit.description ?? '',
@@ -108,7 +105,7 @@ class _DesignCreditsState extends State<DesignCredits> {
 class DesignCreditContainer extends StatefulWidget {
   final String professorEmail;
   final String projectName;
-  final String userName;
+
   final String email;
   final String designCreditId;
   final List<String> eligibleBranches;
@@ -118,7 +115,6 @@ class DesignCreditContainer extends StatefulWidget {
   const DesignCreditContainer(
       {required this.offeredBy,
       required this.professorEmail,
-      required this.userName,
       required this.email,
       required this.designCreditId,
       required this.desc,
@@ -228,7 +224,6 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
                 MaterialPageRoute(
                   builder: (context) => ApplyDesignCredit(
                     professorEmail: widget.professorEmail,
-                    userName: widget.userName,
                     useremail: widget.email,
                     projectName: widget.projectName,
                     prfessorName: widget.professorName,

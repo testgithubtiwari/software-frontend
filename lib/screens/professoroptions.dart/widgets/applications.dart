@@ -1,8 +1,11 @@
 // ignore_for_file: deprecated_member_use
 import 'package:DesignCredit/widgets/constants.dart';
+import 'package:DesignCredit/widgets/desktopappbar.dart';
 import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -62,7 +65,9 @@ class _ApplicationsState extends State<Applications> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const MobileAppBar(),
+                size.width <= 1200
+                    ? const MobileAppBar()
+                    : const DeskTopAppBar(),
                 const SizedBox(
                   height: 20,
                 ),
@@ -90,9 +95,6 @@ class _ApplicationsState extends State<Applications> {
                                 rollNumber:
                                     application.userId?.rollNumber ?? '',
                                 name: application.userId?.name ?? '',
-                                // projectName:
-                                //     application.designCreditId?.projectName ??
-                                //         '',
                                 resumeLink: application.resumeLink ?? '',
                                 email: application.userId?.email ?? '',
                               );
@@ -208,10 +210,13 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
                 const SizedBox(
                   width: 20,
                 ),
-                const Icon(
-                  Icons.link,
-                  color: Colors.white,
-                  size: 30,
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: const Icon(
+                    Icons.link,
+                    color: Colors.white,
+                    size: 30,
+                  ),
                 ),
               ],
             ),

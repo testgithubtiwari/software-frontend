@@ -202,7 +202,6 @@ class _StudentOptionsState extends State<StudentOptions> {
       children: [
         OptionContainer(
           screen: DesignCredits(
-            userName: widget.userName,
             userEmail: widget.userEmail,
           ),
           text: 'All Design Credits',

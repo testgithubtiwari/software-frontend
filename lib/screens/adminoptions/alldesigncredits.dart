@@ -3,6 +3,7 @@
 import 'package:DesignCredit/api/designcreditapi.dart';
 import 'package:DesignCredit/models/designcreditmodel.dart';
 import 'package:DesignCredit/widgets/constants.dart';
+import 'package:DesignCredit/widgets/desktopappbar.dart';
 import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class _AllDesignCreditsState extends State<AllDesignCredits> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const MobileAppBar(),
+                size.width >= 1200 ? const DeskTopAppBar() : MobileAppBar(),
                 const SizedBox(
                   height: 20,
                 ),

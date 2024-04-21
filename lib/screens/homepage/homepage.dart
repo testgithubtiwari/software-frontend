@@ -36,7 +36,8 @@ class _HomePageState extends State<HomePage> {
     int statusCode = result.item2;
     if (statusCode == 401) {
       showToast(
-          'Invalid token, Please Log In again. Redirecting you to Login Page');
+        'Invalid token, Please Log In again. Redirecting you to Login Page',
+      );
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('accessToken', '');
       prefs.setString('refreshToken', '');
@@ -88,32 +89,36 @@ class _HomePageState extends State<HomePage> {
               fit: BoxFit.cover,
             ),
           ),
-          child: Column(
-            children: [
-              size.width <= 1200 ? const MobileAppBar() : const DeskTopAppBar(),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                padding: EdgeInsets.all(10),
-                child: _userFuture != null && _userFuture!.isNotEmpty
-                    ? Text(
-                        _userFuture![0].userType == 'Admin'
-                            ? 'Welcome to the admin panel! You can see all the users, all design credits, and also all the applications. To see these, you have to go to the Nav Drawer options.'
-                            : '',
-                        style: GoogleFonts.orbitron(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        textAlign: TextAlign.center,
-                      )
-                    : SizedBox(),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                size.width <= 1200
+                    ? const MobileAppBar()
+                    : const DeskTopAppBar(),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: _userFuture != null && _userFuture!.isNotEmpty
+                      ? Text(
+                          _userFuture![0].userType == 'Admin'
+                              ? 'Welcome to the admin panel! You can see all the users, all design credits, and also all the applications. To see these, you have to go to the Nav Drawer options.'
+                              : '',
+                          style: GoogleFonts.orbitron(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          textAlign: TextAlign.center,
+                        )
+                      : SizedBox(),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
           ),
         ),
       ),

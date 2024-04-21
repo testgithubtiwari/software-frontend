@@ -23,12 +23,11 @@ class ApplyDesignCredit extends StatefulWidget {
   final String professorEmail;
   final String projectName;
   final String useremail;
-  final String userName;
+
   const ApplyDesignCredit(
       {required this.prfessorName,
       required this.useremail,
       required this.professorEmail,
-      required this.userName,
       required this.projectName,
       required this.designCreditId,
       super.key});
@@ -40,6 +39,7 @@ class ApplyDesignCredit extends StatefulWidget {
 class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
   PlatformFile? objFile;
   String? filename;
+  String? userName;
 
   void chooseFileUsingFilePicker() async {
     var result = await FilePicker.platform.pickFiles(
@@ -74,7 +74,6 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
       if (objFile != null) {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         String? userId = prefs.getString('userId');
-        // print(userId);
         final request = http.MultipartRequest(
           "POST",
           Uri.parse("$baseUrlMobileLocalhost/application/get-link"),
@@ -101,14 +100,11 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
           await Future.delayed(const Duration(seconds: 1));
           showToast('Backend error', Colors.red);
         } else if (resp.statusCode == 200) {
-          // Read and decode the response JSON
           var responseBody = await resp.stream.bytesToString();
           Map<String, dynamic> responseJson = jsonDecode(responseBody);
 
-          // Extract the publicUrl from the response and replace backslashes with forward slashes
           String publicUrl = responseJson['publicUrl'].replaceAll('\\', '/');
 
-          // Display or use the publicUrl as needed
           print('Public URL: $publicUrl');
 
           Map<String, dynamic> requestBody = {
@@ -125,9 +121,7 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
             body: requestBody,
           );
 
-          // Check the status code of the response
           if (response.statusCode == 201) {
-            // Request was successful
             print('Design credit added successfully');
             await Future.delayed(const Duration(seconds: 2));
             Navigator.pop(context);
@@ -138,8 +132,12 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
               filename = null;
             });
             await Future.delayed(const Duration(seconds: 2));
+            final SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            userName = preferences.getString('name');
+            print(userName);
             sendEmailUser(
-              widget.userName,
+              userName!,
               widget.useremail,
               widget.prfessorName,
               widget.projectName,
@@ -147,7 +145,7 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
             );
             await Future.delayed(const Duration(seconds: 2));
             sendEmailProfessor(
-              widget.userName,
+              userName!,
               widget.professorEmail,
               widget.prfessorName,
               widget.projectName,
@@ -221,7 +219,7 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
           <html>
           <body>
             <p>Dear $userName,</p>
-            <p>Thanks for applying for the project '$projectName'.</p>
+            <p>Thanks for applying for the project - '$projectName'.</p>
             <p>$professorName will reach you at the earliest!</p>
           <p>Here is your uploaded resume: <a href="$path">Resume Link</a></p>
           </body>
@@ -293,16 +291,15 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
       Map<String, dynamic> requestBody = {
         "from": adminEmail,
         "to": receiverEmail,
-        "subject":
-            "Application received from $userName for the Project - $projectName",
+        "subject": "Application received for the Project - $projectName",
         "html": """
           <html>
           <body>
             <p>Dear $professorName,</p>
             <p>One applicant has applied the design credit '$projectName'.</p>
-            <p>Applicant Name is $userName</p>
+            <p>Applicant Name is $userName .</p>
           <p>Here is the uploaded resume for your reference: <a href="$path">Resume Link</a></p>
-          <p>Please check if the candiadate is eleigible for the design credit project that he has applied</p>
+          <p>Please check if the candiadate is eleigible for the design credit project that he has applied.</p>
           </body>
         </html>
         """

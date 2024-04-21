@@ -8,6 +8,7 @@ import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 // import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -85,7 +86,7 @@ class _AllApplicationsState extends State<AllApplications> {
                             ),
                           )
                         : Wrap(
-                            spacing: 10,
+                            spacing: 20,
                             runSpacing: 20,
                             children: _applications.map((entry) {
                               final application = entry.value;
@@ -153,13 +154,43 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
             text: widget.name,
             textType: 'Applied By:',
           ),
+          const SizedBox(
+            height: 8,
+          ),
+          const Divider(
+            height: 1,
+            color: Colors.white,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
           CustomText(
             text: widget.email,
             textType: 'Email-Id:',
           ),
+          const SizedBox(
+            height: 8,
+          ),
+          const Divider(
+            height: 1,
+            color: Colors.white,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
           CustomText(
             text: widget.projectName,
             textType: 'ProjectName:',
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          const Divider(
+            height: 1,
+            color: Colors.white,
+          ),
+          const SizedBox(
+            height: 8,
           ),
           GestureDetector(
             onTap: _openResumeLink,
@@ -176,10 +207,13 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
                 const SizedBox(
                   width: 8,
                 ),
-                const Icon(
-                  Icons.link,
-                  color: Colors.white,
-                  size: 24,
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: const Icon(
+                    Icons.link,
+                    color: Colors.white,
+                    size: 24,
+                  ),
                 ),
               ],
             ),
