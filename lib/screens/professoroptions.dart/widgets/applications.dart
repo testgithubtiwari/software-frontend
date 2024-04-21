@@ -3,9 +3,9 @@ import 'package:DesignCredit/widgets/constants.dart';
 import 'package:DesignCredit/widgets/desktopappbar.dart';
 import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -130,6 +130,8 @@ class AllApplicationsContainer extends StatefulWidget {
 }
 
 class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
+  bool isAccept = true;
+  bool isReject = false;
   void _openResumeLink() async {
     if (await canLaunch(widget.resumeLink)) {
       await launch(widget.resumeLink);
@@ -151,7 +153,7 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
             text: widget.name.toUpperCase(),
@@ -221,8 +223,164 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
               ],
             ),
           ),
+          SizedBox(
+            height: 10,
+          ),
+          const Divider(
+            color: Colors.white,
+            height: 1,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
+                children: [
+                  Checkbox(
+                    value: isAccept,
+                    onChanged: (bool? value) => {
+                      setState(() {
+                        isAccept = !isAccept;
+                        isReject = false;
+                      })
+                    },
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    'Accept?',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  Checkbox(
+                    value: isReject,
+                    onChanged: (bool? value) => {
+                      setState(() {
+                        isReject = !isReject;
+                        isAccept = false;
+                      })
+                    },
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    'Reject?',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          const Divider(
+            color: Colors.white,
+            height: 1,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          isAccept
+              ? InkWell(
+                  mouseCursor: SystemMouseCursors.click,
+                  onTap: () {
+                    _showConfirmationDialog(isAccept, 'Accept');
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 50,
+                    width: 150,
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.blue,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Send Status',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : isReject
+                  ? InkWell(
+                      mouseCursor: SystemMouseCursors.click,
+                      onTap: () {
+                        _showConfirmationDialog(isReject, 'Reject');
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: 150,
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.blue,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Send Status',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
         ],
       ),
+    );
+  }
+
+  void _showConfirmationDialog(bool value, String action) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirmation'),
+          content: Text('Are you sure you want to $action?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Yes'),
+              onPressed: () {
+                // Perform your post request here
+                print('Post request triggered for $action');
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

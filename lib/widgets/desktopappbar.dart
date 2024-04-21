@@ -20,7 +20,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuple/tuple.dart';
-
+import '../screens/auth/signupscreen.dart';
 import '../api/userapi.dart';
 import '../models/usermodel.dart';
 import '../screens/auth/loginscreen.dart';
@@ -51,9 +51,31 @@ class _DeskTopAppBarState extends State<DeskTopAppBar> {
 
   Future<void> getUserDetails() async {
     Tuple2<List<UserModelDesignCredit>, int> result = await fetchUserData();
-    setState(() {
+    int statusCode = result.item2;
+    if (statusCode == 401) {
+      showToast(
+        'Invalid token, Please Log In again. Redirecting you to Login Page',
+      );
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('accessToken', '');
+      prefs.setString('refreshToken', '');
+      await Future.delayed(const Duration(seconds: 3));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()));
+    } else if (statusCode == 404) {
+      showToast(
+          'User not found! Please register first.Redirecting you to SignUp Page');
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('accessToken', '');
+      prefs.setString('refreshToken', '');
+      await Future.delayed(const Duration(seconds: 2));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const SignUp()));
+    } else if (statusCode == 500) {
+      showToast('Internal Server Error! Please try after sometime');
+    } else {
       userFuture = result.item1;
-    });
+    }
   }
 
   Future<void> checkProfileCompleteness() async {
