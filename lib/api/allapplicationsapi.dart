@@ -31,7 +31,8 @@ Future<List<MapEntry<String, AllApplicationsModel>>>
 Future<List<MapEntry<String, AllApplicationDesignCreditModelNew>>>
     fetchAllApplicationsDesignCredit(String designCreditId) async {
   try {
-    // print(designCreditId);
+    print('Design Credit Id is:');
+    print(designCreditId);
     final response = await http.get(Uri.parse(
         '$baseUrlMobileLocalhost/application/get-application-design-credit?id=$designCreditId'));
 
@@ -41,15 +42,22 @@ Future<List<MapEntry<String, AllApplicationDesignCreditModelNew>>>
       final List<dynamic> jsonData = json.decode(response.body);
 
       // Ensure jsonData is a List with at least one element
-      if (jsonData.isNotEmpty && jsonData[0] is Map<String, dynamic>) {
+      if (jsonData.isNotEmpty) {
         final List<MapEntry<String, AllApplicationDesignCreditModelNew>>
             applicationsList = [];
-        final application =
-            AllApplicationDesignCreditModelNew.fromJson(jsonData[0]);
-        applicationsList.add(MapEntry(application.sId ?? '', application));
+        for (final data in jsonData) {
+          if (data is Map<String, dynamic>) {
+            final application =
+                AllApplicationDesignCreditModelNew.fromJson(data);
+            applicationsList.add(MapEntry(application.sId ?? '', application));
+          } else {
+            throw Exception('Invalid JSON data');
+          }
+        }
+        print(applicationsList.length);
         return applicationsList;
       } else {
-        throw Exception('Invalid JSON data');
+        throw Exception('No data found');
       }
     } else {
       throw Exception('Failed to load applications: ${response.statusCode}');
