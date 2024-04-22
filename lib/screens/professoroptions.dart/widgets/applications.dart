@@ -3,14 +3,17 @@ import 'package:DesignCredit/widgets/constants.dart';
 import 'package:DesignCredit/widgets/desktopappbar.dart';
 import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../api/allapplicationsapi.dart';
 import '../../../models/allapplicationdesigncreditmodelnew.dart';
+import 'package:http/http.dart' as http;
 
 class Applications extends StatefulWidget {
   final String designCreditId;
@@ -92,6 +95,8 @@ class _ApplicationsState extends State<Applications> {
                             children: _applications.map((entry) {
                               final application = entry.value;
                               return AllApplicationsContainer(
+                                designCreditId: widget.designCreditId,
+                                userId: application.userId?.sId ?? '',
                                 rollNumber:
                                     application.userId?.rollNumber ?? '',
                                 name: application.userId?.name ?? '',
@@ -110,13 +115,17 @@ class _ApplicationsState extends State<Applications> {
 }
 
 class AllApplicationsContainer extends StatefulWidget {
+  final String userId;
   final String name;
+  final String designCreditId;
   final String email;
   final String resumeLink;
   final String rollNumber;
   // final String projectName;
   const AllApplicationsContainer({
     required this.name,
+    required this.userId,
+    required this.designCreditId,
     // required this.projectName,
     required this.resumeLink,
     required this.email,
@@ -300,7 +309,7 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
               ? InkWell(
                   mouseCursor: SystemMouseCursors.click,
                   onTap: () {
-                    _showConfirmationDialog(isAccept, 'Accept');
+                    _showConfirmationDialog('Accept');
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -327,7 +336,7 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
                   ? InkWell(
                       mouseCursor: SystemMouseCursors.click,
                       onTap: () {
-                        _showConfirmationDialog(isReject, 'Reject');
+                        _showConfirmationDialog('Reject');
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -356,7 +365,7 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
     );
   }
 
-  void _showConfirmationDialog(bool value, String action) {
+  void _showConfirmationDialog(String action) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -372,10 +381,11 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
             ),
             TextButton(
               child: Text('Yes'),
-              onPressed: () {
-                // Perform your post request here
-                print('Post request triggered for $action');
+              onPressed: () async {
                 Navigator.of(context).pop();
+                await Future.delayed(Duration(seconds: 1));
+                _sendStatus(widget.userId, widget.designCreditId, action);
+                print('Post request triggered for $action');
               },
             ),
           ],
@@ -383,6 +393,65 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
       },
     );
   }
+
+  Future<void> _sendStatus(
+      String userId, String dessignCreditId, String value) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 20),
+              Text("Sending Status. Please wait...."),
+            ],
+          ),
+        );
+      },
+    );
+
+    try {
+      final response = await http.post(
+        Uri.parse(
+          '$baseUrlMobileLocalhost/results/post-result',
+        ),
+        body: {
+          'designCreditId': dessignCreditId,
+          'userId': userId,
+          'status': value,
+        },
+      );
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        await Future.delayed(const Duration(seconds: 2));
+
+        Navigator.of(context).pop();
+
+        showToast('Status send successfully!', Colors.green);
+      } else if (response.statusCode == 400) {
+        Navigator.of(context).pop();
+        showToast('All the fields is not provided', Colors.red);
+      }
+    } catch (error) {
+      print("Error occurred: $error");
+      Navigator.of(context).pop();
+      showToast("Error occurred! Please try again later.", Colors.red);
+    }
+  }
+}
+
+void showToast(String message, Color color) {
+  Fluttertoast.showToast(
+    msg: message,
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.CENTER,
+    timeInSecForIosWeb: 1,
+    backgroundColor: color,
+    textColor: Colors.white,
+    fontSize: 16.0,
+  );
 }
 
 class CustomText extends StatelessWidget {
