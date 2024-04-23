@@ -8,6 +8,7 @@ import 'package:DesignCredit/screens/homepage/homepage.dart';
 import 'package:DesignCredit/screens/professoroptions.dart/adddesigncredit.dart';
 import 'package:DesignCredit/screens/professoroptions.dart/viewdesigncredit.dart';
 import 'package:DesignCredit/screens/studentoptions/designcredits.dart';
+import 'package:DesignCredit/screens/studentoptions/results.dart';
 import 'package:DesignCredit/screens/studentoptions/userapplications.dart';
 import 'package:DesignCredit/widgets/constants.dart';
 import 'package:DesignCredit/widgets/profilepage.dart';
@@ -182,6 +183,7 @@ class _DeskTopAppBarState extends State<DeskTopAppBar> {
                           ? const AdminOptions()
                           : userFuture?[0].userType == 'Student'
                               ? StudentOption(
+                                  userId: userFuture?[0].sId ?? '',
                                   userEmail: userFuture?[0].email ?? '',
                                 )
                               : const ProfessorOptions(),
@@ -341,8 +343,9 @@ class _ProfessorOptionsState extends State<ProfessorOptions> {
 
 class StudentOption extends StatefulWidget {
   final String userEmail;
-
-  const StudentOption({required this.userEmail, super.key});
+  final String userId;
+  const StudentOption(
+      {required this.userId, required this.userEmail, super.key});
 
   @override
   State<StudentOption> createState() => _StudentOptionState();
@@ -382,7 +385,12 @@ class _StudentOptionState extends State<StudentOption> {
         ),
         ClickableText(
           text: 'Check Results',
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Results(userId: widget.userId)));
+          },
         ),
       ],
     );

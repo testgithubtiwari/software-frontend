@@ -85,6 +85,7 @@ class _ViewYourDesignCreditsState extends State<ViewYourDesignCredits> {
                         children: snapshot.data!.map(
                           (designCredit) {
                             return DesignCreditContainer(
+                              professorName: designCredit.professorName ?? '',
                               designCreditId: designCredit.sId ?? '',
                               offeredBy: designCredit.offeredBy ?? '',
                               projectName: designCredit.projectName ?? '',
@@ -109,11 +110,13 @@ class _ViewYourDesignCreditsState extends State<ViewYourDesignCredits> {
 class DesignCreditContainer extends StatefulWidget {
   final String designCreditId;
   final String projectName;
+  final String professorName;
   final List<String> eligibleBranches;
   // final String professorName;
   final String offeredBy;
   const DesignCreditContainer(
       {required this.offeredBy,
+      required this.professorName,
       required this.designCreditId,
       // required this.professorName,
       required this.projectName,
@@ -220,8 +223,10 @@ class _DesignCreditContainerState extends State<DesignCreditContainer> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          Applications(designCreditId: widget.designCreditId),
+                      builder: (context) => Applications(
+                          professorName: widget.professorName,
+                          projectName: widget.projectName,
+                          designCreditId: widget.designCreditId),
                     ),
                   );
                 },

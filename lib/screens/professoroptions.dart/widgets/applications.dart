@@ -1,4 +1,6 @@
 // ignore_for_file: deprecated_member_use
+import 'dart:convert';
+
 import 'package:DesignCredit/widgets/constants.dart';
 import 'package:DesignCredit/widgets/desktopappbar.dart';
 import 'package:DesignCredit/widgets/mobileappbar.dart';
@@ -17,7 +19,13 @@ import 'package:http/http.dart' as http;
 
 class Applications extends StatefulWidget {
   final String designCreditId;
-  const Applications({required this.designCreditId, super.key});
+  final String projectName;
+  final String professorName;
+  const Applications(
+      {required this.professorName,
+      required this.projectName,
+      required this.designCreditId,
+      super.key});
 
   @override
   State<Applications> createState() => _ApplicationsState();
@@ -95,6 +103,8 @@ class _ApplicationsState extends State<Applications> {
                             children: _applications.map((entry) {
                               final application = entry.value;
                               return AllApplicationsContainer(
+                                professorName: widget.professorName,
+                                projectName: widget.projectName,
                                 designCreditId: widget.designCreditId,
                                 userId: application.userId?.sId ?? '',
                                 rollNumber:
@@ -116,6 +126,8 @@ class _ApplicationsState extends State<Applications> {
 
 class AllApplicationsContainer extends StatefulWidget {
   final String userId;
+  final String projectName;
+  final String professorName;
   final String name;
   final String designCreditId;
   final String email;
@@ -124,6 +136,8 @@ class AllApplicationsContainer extends StatefulWidget {
   // final String projectName;
   const AllApplicationsContainer({
     required this.name,
+    required this.professorName,
+    required this.projectName,
     required this.userId,
     required this.designCreditId,
     // required this.projectName,
@@ -309,7 +323,13 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
               ? InkWell(
                   mouseCursor: SystemMouseCursors.click,
                   onTap: () {
-                    _showConfirmationDialog('Accept');
+                    _showConfirmationDialog(
+                      'Accept',
+                      widget.projectName,
+                      widget.professorName,
+                      widget.email,
+                      widget.name,
+                    );
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -336,7 +356,13 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
                   ? InkWell(
                       mouseCursor: SystemMouseCursors.click,
                       onTap: () {
-                        _showConfirmationDialog('Reject');
+                        _showConfirmationDialog(
+                          'Reject',
+                          widget.projectName,
+                          widget.professorName,
+                          widget.email,
+                          widget.name,
+                        );
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -365,7 +391,13 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
     );
   }
 
-  void _showConfirmationDialog(String action) {
+  void _showConfirmationDialog(
+    String action,
+    String projectName,
+    String professorName,
+    String userEmail,
+    String userName,
+  ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -384,7 +416,15 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
               onPressed: () async {
                 Navigator.of(context).pop();
                 await Future.delayed(Duration(seconds: 1));
-                _sendStatus(widget.userId, widget.designCreditId, action);
+                _sendStatus(
+                  widget.userId,
+                  widget.designCreditId,
+                  action,
+                  projectName,
+                  professorName,
+                  userEmail,
+                  userName,
+                );
                 print('Post request triggered for $action');
               },
             ),
@@ -395,7 +435,14 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
   }
 
   Future<void> _sendStatus(
-      String userId, String dessignCreditId, String value) async {
+    String userId,
+    String dessignCreditId,
+    String value,
+    String projectName,
+    String professorName,
+    String userEmail,
+    String userName,
+  ) async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -430,6 +477,14 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
         Navigator.of(context).pop();
 
         showToast('Status send successfully!', Colors.green);
+
+        _sendEmailUser(
+          userName,
+          userEmail,
+          professorName,
+          projectName,
+          value,
+        );
       } else if (response.statusCode == 400) {
         Navigator.of(context).pop();
         showToast('All the fields is not provided', Colors.red);
@@ -438,6 +493,102 @@ class _AllApplicationsContainerState extends State<AllApplicationsContainer> {
       print("Error occurred: $error");
       Navigator.of(context).pop();
       showToast("Error occurred! Please try again later.", Colors.red);
+    }
+  }
+
+  void _sendEmailUser(
+    String userName,
+    String receiverEmail,
+    String professorName,
+    String projectName,
+    String status,
+  ) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 20),
+              Text("Sending email. Please wait..."),
+            ],
+          ),
+        );
+      },
+    );
+    try {
+      Map<String, dynamic> requestBody = {};
+
+      if (status == "Accept") {
+        requestBody = {
+          "from": adminEmail,
+          "to": receiverEmail,
+          "subject":
+              "Regarding the update for the Design Credit - $projectName",
+          "html": """
+    <html>
+    <body>
+      <p>Dear $userName,</p>
+      <p>Your application <strong>$projectName</strong> has been reviewed and your status is updated to <strong>$status</strong>.</p>
+      <p>Please reach $professorName at the earliest during office hours ⏰, but first, please take confirmation from the professor ℹ️ for the time.</p>
+    </body>
+    </html>
+  """
+        };
+      } else if (status == "Reject") {
+        requestBody = {
+          "from": adminEmail,
+          "to": receiverEmail,
+          "subject":
+              "Regarding the update for the Design Credit - $projectName",
+          "html": """
+    <html>
+    <body>
+      <p>Dear $userName,</p>
+      <p>We regret to inform you that your application <strong>$projectName</strong> has been reviewed and unfortunately, your status is updated to <strong>$status</strong>. 😞</p>
+      <p>Sorry for the inconvenience. Please try again next time. 🙁</p>
+    </body>
+    </html>
+  """
+        };
+      }
+
+      String jsonBody = json.encode(requestBody);
+
+      final response = await http.post(
+        Uri.parse(
+          '$baseUrlMobileLocalhost/email/send-email',
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonBody,
+      );
+
+      if (response.statusCode == 200) {
+        await Future.delayed(Duration(seconds: 4));
+        Navigator.pop(context);
+        await Future.delayed(Duration(seconds: 2));
+        showToast(
+          'Mail successfully sent to the student',
+          Colors.green,
+        );
+        print('Email sent successfully');
+      } else {
+        await Future.delayed(Duration(seconds: 2));
+        Navigator.pop(context);
+        await Future.delayed(Duration(seconds: 1));
+        showToast(
+          'There is error in mail send',
+          Colors.red,
+        );
+        print('Failed to send email: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error sending email: $error');
     }
   }
 }

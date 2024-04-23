@@ -141,6 +141,7 @@ class _NavDrawerState extends State<NavDrawer> {
                       ? const AdminOptions()
                       : userFuture?[0].userType == 'Student'
                           ? StudentOptions(
+                              userId: userFuture?[0].sId ?? '',
                               userName: userFuture?[0].name ?? '',
                               userEmail: userFuture?[0].email ?? '',
                             )
@@ -188,8 +189,12 @@ class _AdminOptionsState extends State<AdminOptions> {
 class StudentOptions extends StatefulWidget {
   final String userEmail;
   final String userName;
+  final String userId;
   const StudentOptions(
-      {required this.userEmail, required this.userName, super.key});
+      {required this.userEmail,
+      required this.userId,
+      required this.userName,
+      super.key});
 
   @override
   State<StudentOptions> createState() => _StudentOptionsState();
@@ -213,7 +218,11 @@ class _StudentOptionsState extends State<StudentOptions> {
         SizedBox(
           height: 20,
         ),
-        OptionContainer(screen: Results(), text: 'Check Results'),
+        OptionContainer(
+            screen: Results(
+              userId: widget.userId,
+            ),
+            text: 'Check Results'),
       ],
     );
   }
