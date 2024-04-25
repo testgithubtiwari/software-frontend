@@ -5,7 +5,7 @@ import 'package:DesignCredit/models/usermodel.dart';
 import 'package:DesignCredit/screens/auth/loginscreen.dart';
 import 'package:DesignCredit/screens/auth/signupscreen.dart';
 import 'package:DesignCredit/widgets/constants.dart';
-import 'package:DesignCredit/widgets/desktopappbar.dart';
+// import 'package:DesignCredit/widgets/desktopappbar.dart';
 // import 'package:DesignCredit/widgets/desktopappbar.dart';
 import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
@@ -110,7 +110,7 @@ class _ProfilePageState extends State<UpdateProfilePage> {
         'name': name,
         'email': email,
         'branch': branch,
-        'rollnumber': rollnumber,
+        'rollNumber': rollnumber,
       };
       // print(requestBody);
 
@@ -320,7 +320,7 @@ class _ProfilePageState extends State<UpdateProfilePage> {
                                     const Color.fromARGB(255, 12, 44, 43),
                               )
                             : Container(),
-                        _rollNumber != null && _rollNumber != ''
+                        _rollNumber != null
                             ? CustomTextField(
                                 labelText: 'RollNumber',
                                 value: _rollNumber!,
