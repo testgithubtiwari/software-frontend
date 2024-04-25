@@ -34,44 +34,44 @@ jobs:
         with:
           commit_message: Commit the artifacts.
 
-  build_release_apk:
-    name: Build Release APK
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+  # build_release_apk:
+  #   name: Build Release APK
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
+  #     - name: Set up Flutter
+  #       uses: subosito/flutter-action@v2
+  #       with:
+  #         channel: "stable"
 
-      - name: Get Flutter packages
-        run: flutter pub get
+  #     - name: Get Flutter packages
+  #       run: flutter pub get
 
-      - name: Print working directory
-        run: pwd
+  #     - name: Print working directory
+  #       run: pwd
 
-      - name: List files in working directory
-        run: ls -al
+  #     - name: List files in working directory
+  #       run: ls -al
 
-      - name: Check Flutter SDK version
-        run: flutter --version
+  #     - name: Check Flutter SDK version
+  #       run: flutter --version
 
-      - name: Build Android APK
-        run: flutter build apk --release
+  #     - name: Build Android APK
+  #       run: flutter build apk --release
 
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+  #     - name: Upload APK artifact
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: release-apk
+  #         path: build/app/outputs/flutter-apk/app-release.apk
 
-      - name: Commit changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -f build/app/outputs/flutter-apk/app-release.apk
-          git commit -m "Add release APK"
-          git pull origin main --rebase
-          git push origin main
+  #     - name: Commit changes
+  #       run: |
+  #         git config --local user.email "action@github.com"
+  #         git config --local user.name "GitHub Action"
+  #         git add -f build/app/outputs/flutter-apk/app-release.apk
+  #         git commit -m "Add release APK"
+  #         git pull origin main --rebase
+  #         git push origin main
