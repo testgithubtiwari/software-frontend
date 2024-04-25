@@ -1,6 +1,6 @@
 // API URLS
 const baseUrlMain = 'http://13.201.24.145:5000/software-project.in';
-const baseUrlLocalhost = 'http://localhost:5000/software-project.in';
+const baseUrlLocalhost = 'http://13.201.24.145:5000/software-project.in';
 const baseUrlMobileLocalhost = 'http://13.201.24.145:5000/software-project.in';
 const adminEmail = 'tiwari.26@iitj.ac.in';
 // Images
