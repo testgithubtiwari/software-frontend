@@ -11,7 +11,6 @@ import 'package:DesignCredit/widgets/mobileappbar.dart';
 import 'package:DesignCredit/widgets/navdrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuple/tuple.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
@@ -91,6 +90,7 @@ class _HomePageState extends State<HomePage> {
           ),
           child: SingleChildScrollView(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 size.width <= 1200
                     ? const MobileAppBar()
@@ -98,21 +98,46 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: _userFuture != null && _userFuture!.isNotEmpty
-                      ? Text(
-                          _userFuture![0].userType == 'Admin'
-                              ? 'Welcome to the admin panel! You can see all the users, all design credits, and also all the applications. To see these, you have to go to the Nav Drawer options.'
-                              : '',
-                          style: GoogleFonts.orbitron(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                          ),
-                          textAlign: TextAlign.center,
-                        )
-                      : SizedBox(),
+                FutureBuilder<Tuple2<List<UserModelDesignCredit>?, int>>(
+                  future: fetchUserData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator(); // Show loading indicator while waiting for the future to complete.
+                    } else {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        _userFuture = snapshot.data?.item1;
+                        if (_userFuture != null && _userFuture!.isNotEmpty) {
+                          return _userFuture![0].userType == 'Admin'
+                              ? Center(
+                                  child: Container(
+                                    width: size.width * 0.60,
+                                    decoration: BoxDecoration(
+                                      color: Color.fromARGB(155, 17, 17, 17),
+                                      borderRadius: BorderRadius.circular(13),
+                                    ),
+                                    padding: EdgeInsets.all(10),
+                                    child: Text(
+                                      'Welcome to the admin panel! You can see all the users, all design credits, and also all the applications. To see these, you have to go to the Nav Drawer options in mobile and in web it at above.',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                )
+                              : _userFuture![0].userType == 'Professor'
+                                  ? HomePageProfessor()
+                                  : HomePageStudent();
+                        } else {
+                          return SizedBox();
+                        }
+                      }
+                    }
+                  },
                 ),
                 const SizedBox(
                   height: 10,
@@ -123,5 +148,33 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+}
+
+class HomePageStudent extends StatefulWidget {
+  const HomePageStudent({super.key});
+
+  @override
+  State<HomePageStudent> createState() => _HomePageStudentState();
+}
+
+class _HomePageStudentState extends State<HomePageStudent> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class HomePageProfessor extends StatefulWidget {
+  const HomePageProfessor({super.key});
+
+  @override
+  State<HomePageProfessor> createState() => _HomePageProfessorState();
+}
+
+class _HomePageProfessorState extends State<HomePageProfessor> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
