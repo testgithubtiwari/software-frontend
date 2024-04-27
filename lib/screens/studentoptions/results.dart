@@ -72,7 +72,7 @@ class _ResultsState extends State<Results> {
                     : _resultList.isEmpty
                         ? Center(
                             child: Text(
-                              'No applications found',
+                              'No Result Available',
                               style: GoogleFonts.poppins(
                                 color: Color.fromARGB(221, 0, 0, 0),
                                 fontSize: 18,

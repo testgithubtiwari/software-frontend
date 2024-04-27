@@ -447,23 +447,26 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
                           children: [
                             GestureDetector(
                               onTap: chooseFileUsingFilePicker,
-                              child: Container(
-                                // margin:
-                                //     const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                height: 50,
-                                width: 150,
-                                // padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.blue,
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'Choose File',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: Container(
+                                  // margin:
+                                  //     const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                  height: 50,
+                                  width: 150,
+                                  // padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.blue,
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                      'Choose File',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -473,23 +476,26 @@ class _ApplyDesignCreditState extends State<ApplyDesignCredit> {
                               onTap: () {
                                 uploadSelectedFile(widget.designCreditId);
                               },
-                              child: Container(
-                                // margin:
-                                //     const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                height: 50,
-                                width: 150,
-                                // padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.blue,
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'Apply',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: Container(
+                                  // margin:
+                                  //     const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                  height: 50,
+                                  width: 150,
+                                  // padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.blue,
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                      'Apply',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
